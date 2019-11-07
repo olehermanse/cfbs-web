@@ -8,7 +8,7 @@ import ClipboardJS from 'clipboard';
       console.log(button);
       button.addEventListener("click", (e) => {
           document.querySelector("#copy_container")
-          const packageName = e.target.outerText;
+          const packageName = e.target.getAttribute("data");
           document.querySelector("#copy_field").value = "cpm install " + packageName;
       });
   }
