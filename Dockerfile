@@ -1,7 +1,7 @@
 FROM node:8 AS cpm-directory-build
 ADD ./ /cpm.directory
 WORKDIR /cpm.directory
-RUN sh -c "cd frontend && npm install && npm run cpm-directory-build"
+RUN sh -c "cd frontend && npm install && npm run build"
 
 FROM nginx:stable-alpine
 RUN rm -f /usr/share/nginx/html/index.html
