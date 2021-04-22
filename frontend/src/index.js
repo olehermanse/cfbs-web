@@ -7,7 +7,7 @@ import ClipboardJS from 'clipboard';
       button.addEventListener("click", (e) => {
           document.querySelector("#copy_container")
           const packageName = e.target.getAttribute("data");
-          document.querySelector("#copy_field").value = "cpm install " + packageName;
+          document.querySelector("#copy_field").value = "cfbs install " + packageName;
       });
   }
 })();
