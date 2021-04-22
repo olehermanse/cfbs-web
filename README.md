@@ -1,4 +1,10 @@
-# cfbs-web
+# Unofficial CFEngine Build System Website
+
+The website lists available modules from the index and gives you easy commands to copy.
+
+The CFEngine Build System (cfbs) comes with **no warranty** and is **not supported**.
+This is a work in progress, everything will change.
+Use at your own risk!
 
 ## CFEngine Build System Repositories
 
