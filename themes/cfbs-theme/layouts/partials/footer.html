@@ -1,0 +1,33 @@
+<footer class="footer">
+    <div class="container flex flex-space-between flex--wrap">
+        <div>
+            <img alt="CFEngine" class="footer-logo" src="/images/cfengine-logo.svg" />
+        </div>
+        <nav class="footer-nav">
+            <ul class="unstyled flex flex-space-between">
+                {{ range $menus := .Site.Data.Menus.footer }}
+                {{ range $title, $items := $menus }}
+                <li>
+                    <div class="footer-nav_title">{{ $title }}</div>
+                    <ul class="unstyled">
+                        {{ range $item := $items }}
+                        <li><a href="{{.url}}"  target="{{.target}}">{{.name}}</a></li>
+                        {{ end }}
+                    </ul>
+                </li>
+                {{ end }}
+                {{ end }}
+            </ul>
+        </nav>
+        <div class="footer-social">
+            {{ range $menus := .Site.Data.Menus.socials }}
+            <a href="{{.url}}" target="_blank">{{ .icon | safeHTML }}</a>
+            {{ end }}
+        </div>
+    </div>
+
+</footer>
+<script type="text/javascript" src="{{ "js/main.js" | relURL }}"></script>
+
+</body>
+</html>

@@ -1,16 +1,8 @@
-# Python:
-__pycache__/
-
-# Node / npm:
-node_modules/
-
-# macOS:
+public/
 .DS_Store
-
-# VS Code:
 .vscode/
-
-# Build outputs:
-build/
-dist/
-.cache
+scripts/get_cache.json
+scripts/get_cache.json.log
+./node
+node_modules/
+.vscode/

@@ -1,0 +1,75 @@
+<header>
+<div class="container">
+    <nav class="main-menu flex">
+        <div class="relative logo-container">
+            <a href="/"><img width="212" height="35" alt="CFEngine build" class="logo centered centered-vertical" src="/images/cfengine-build-logo.svg"></a>
+        </div>
+        <div class="search-wrapper">
+            <form class="search" action="/modules/">
+                <input type="text" placeholder="Search modules" name="query" />
+                <button type="submit"><i class="bi bi-search"></i></button>
+             </form>
+        </div>
+        <ul class="flex unstyled links">
+            {{ range .Site.Data.Menus.main }}
+            <li  {{ with .children }}class="flex dropdown"{{ end }}>
+                <a {{ with .children }}class="flex-grow" onclick="dropDownHandler(this)" {{ end }} {{ with .target }} target="{{ . }}" {{ end }}  href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
+                {{ if isset . "children" }}
+                <i class="bi bi-chevron-down"></i>
+                <div class="dropdown-content">
+                    <ul class="unstyled">
+                        {{ range .children }}
+                        <li class="relative">
+                            {{ if isset . "children" }}
+                            <a {{ with .target }} target="{{ . }}" {{ end }} href="{{.url}}" class="flex flex-space-between">
+                                <span>{{.svg_icon | safeHTML }} {{.name}}</span>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <ul class="unstyled">
+                            {{ range .children }}
+                            <li class="relative"><a {{ with .target }} target="{{ . }}" {{ end }} href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a></li>
+                            {{ end }}
+                            </ul>
+                            {{ else }}
+                            <a {{ with .id }} id="{{ . }}" {{ end }} {{ with .target }} target="{{ . }}" {{ end }} href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
+                            {{ end }}
+                        </li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+            </li>
+            {{ end }}
+            <li class="flex dropdown" style="display: none">
+                <button class="btn btn-lg btn-secondary" onclick="fakeLogin(this)">
+                    Log in with Github
+                </button>
+                <div class="logged" style="display: none">
+                    <a style="height:4rem;display:inline-block;"><img height="38" src="https://avatars.githubusercontent.com/u/82047138?v=4" style="border-radius: 10rem;"
+                            width="38"/></a>
+                    <i class="bi bi-chevron-down"></i>
+                    <div class="dropdown-content">
+                        <div class="user"><i class="bi bi-person-fill"></i> Chiachenglu</div>
+                        <ul class="unstyled">
+                            <li class="relative">
+                                <a href="#">Followed modules</a>
+                            </li>
+                            <li class="relative">
+                                <a data-modal="publishModal" href="#">Publish a module</a>
+                            </li>
+                            <li class="relative">
+                                <a href="/">Log out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div onclick="openMenuHandler(this)" class="collapse center-align relative">
+            <i style="font-size: 3.5rem" class="vertical-middle centered collapse-open bi bi-list"></i>
+            <i style="font-size: 3.5rem" class="vertical-middle centered collapse-close bi bi-x"></i>
+        </div>
+    </nav>
+</div>
+</header>

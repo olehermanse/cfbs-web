@@ -1,0 +1,20 @@
+<div class="modules-item">
+    <div class="flex flex--align_center">
+        <div class="modules-item_name flex-grow">
+            <div class="flex flex--align_center">
+                <div class="modules-item_avatar">
+                    <img width="32" height="32" src="{{ .Params.author.image }}" />
+                </div>
+                <div>
+                    <a href="{{ .Permalink }}" class="modules-item_title">{{ .Title }}</a>
+                    <div class="modules-item_author">by {{ .Params.author.name }}</div>
+                </div>
+            </div>
+        </div>
+        {{ if in .Params.Tags "supported" }}
+        <div class="badge badge-success">supported</div>
+        {{ end }}
+    </div>
+    <div class="modules-item_description">{{ .Params.Description }}</div>
+    <div class="modules-item_version">{{ .Params.Version }}</div>
+</div>

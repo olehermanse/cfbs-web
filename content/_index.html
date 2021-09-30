@@ -1,0 +1,171 @@
+---
+title: Home Page
+date: 2021-09-25T08:58:06+00:00
+---
+<section class="main">
+    <div class="container flex flex--align_center flex-space-between">
+        <div class="main-text">
+            <div class="main-text_title">
+                <div class="vertical-middle">
+                    <h1>Welcome to CFEngine Build</h1>
+                </div>
+            </div>
+            <div class="main-text_subtitle">
+                CFEngine Build is a catalogue of policy and modules created by CFEngine,
+                our partner and community that helps DevSecOps teams to simplify the automation process. With CFEngine
+                Build you can automate more with less effort.
+            </div>
+            <div class="margin-top_3 fnd-mdl">
+                <a class="btn btn-lg btn-primary" href="/modules/">Find modules <i class="bi bi-chevron-right"></i></a>
+            </div>
+        </div>
+        <div>
+            <img alt="Illustration" src="/images/home/CFBS_image1.png">
+        </div>
+    </div>
+</section>
+<section class="followed" style="display: none;">
+    <div class="container">
+        <h2>Updates for the modules you follow</h2>
+        <div class="followed-subtitle">
+            The latest version or updates for the modules you have followed.
+        </div>
+
+        <div class="modules">
+            <div class="flex flex--wrap flex-space-between">
+            <div class="modules-item">
+                <div class="flex flex--align_center">
+                    <div class="modules-item_name flex-grow">
+                        <div class="flex flex--align_center">
+                            <div class="modules-item_avatar">
+                                <img src="/images/noavatar.svg" />
+                            </div>
+                            <div>
+                                <a href="#" class="modules-item_title">Title of module</a>
+                                <div class="modules-item_author">by CFEngine</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modules-item_updated">Updated 3 days ago</div>
+                </div>
+                <div class="modules-item_description">Modules description, should be short and consice and maximum 2 lines.  here is more text lorem ipsum. </div>
+                <div class="modules-item_version">version: 3.0.2</div>
+            </div>
+            <div class="modules-item">
+                <div class="flex flex--align_center">
+                    <div class="modules-item_name flex-grow">
+                        <div class="flex flex--align_center">
+                            <div class="modules-item_avatar">
+                                <img src="/images/noavatar.svg" />
+                            </div>
+                            <div>
+                                <a href="#" class="modules-item_title">Title of module</a>
+                                <div class="modules-item_author">by CFEngine</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modules-item_updated">Updated 3 days ago</div>
+                </div>
+                <div class="modules-item_description">Modules description, should be short and consice and maximum 2 lines.  here is more text lorem ipsum. </div>
+                <div class="modules-item_version">version: 3.0.2</div>
+            </div>
+            <div class="modules-item">
+                <div class="flex flex--align_center">
+                    <div class="modules-item_name flex-grow">
+                        <div class="flex flex--align_center">
+                            <div class="modules-item_avatar">
+                                <img src="/images/noavatar.svg" />
+                            </div>
+                            <div>
+                                <a href="#" class="modules-item_title">Title of module</a>
+                                <div class="modules-item_author">by CFEngine</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modules-item_updated">Updated 3 days ago</div>
+                </div>
+                <div class="modules-item_description">Modules description, should be short and consice and maximum 2 lines.  here is more text lorem ipsum. </div>
+                <div class="modules-item_version">version: 3.0.2</div>
+            </div>
+            <div class="modules-item">
+                <div class="flex flex--align_center">
+                    <div class="modules-item_name flex-grow">
+                        <div class="flex flex--align_center">
+                            <div class="modules-item_avatar">
+                                <img src="/images/noavatar.svg" />
+                            </div>
+                            <div>
+                                <a href="#" class="modules-item_title">Title of module</a>
+                                <div class="modules-item_author">by CFEngine</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modules-item_updated">Updated 3 days ago</div>
+                </div>
+                <div class="modules-item_description">Modules description, should be short and consice and maximum 2 lines.  here is more text lorem ipsum. </div>
+                <div class="modules-item_version">version: 3.0.2</div>
+            </div>
+            </div>
+            <div class="center-align modules-all">
+                <a href="#">See all the following modules</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured">
+    <div class="container">
+        <div class="modules">
+            <div class="flex flex--wrap flex-space-between modules-container">
+                <div>
+                    <div class="modules-title">
+                        <h3>Featured modules</h3>
+                        <span>Modules recommended by CFEngine team</span>
+                    </div>
+                    {{< suggested count="3" >}}
+                </div>
+                <div>
+                    <div class="modules-title">
+                        <h3>Popular modules</h3>
+                        <span>Modules with the most downloads</span>
+                    </div>
+                    {{< popular count="3" >}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="new-to-cfe">
+    <div class="container">
+        <div>
+            <img src="/images/home/CFBS_image2.png" />
+        </div>
+        <div>
+            <h2>New to CFEngine?</h2>
+            <span>
+            If you’re new to CFEngine and the concept of modules, we recommend the following resources to get you started.
+        </span>
+            <div>
+                <a target="_blank" href="https://docs.cfengine.com/docs/master/guide-introduction.html">Introduction to CFEngine <i class="bi bi-arrow-right-circle-fill"></i></a>
+                <a target="_blank" href="https://docs.cfengine.com/docs/master/guide-writing-and-serving-policy.html">Writing and serving policy <i class="bi bi-arrow-right-circle-fill"></i></a>
+                <a target="_blank" href="https://docs.cfengine.com/docs/master/examples.html">Examples and Tutorial <i class="bi bi-arrow-right-circle-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="publishModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Publish a module</h2>
+            <span onclick="closeModal(this)" class="close"><i class="bi bi-x-lg"></i></span>
+        </div>
+        <div class="modal-body">
+            <p>Continue to GitHub for instructions on how to add your module to the CFEngine Build website.</p>
+        </div>
+        <div class="modal-footer">
+            <a onclick="closeModal(this)" class="btn btn-default">Cancel</a>
+            <a id="gotogithub" target="_blank" href="https://github.com/cfengine/cfbs-index" class="btn btn-primary">Continue to Github</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+baseurl = "/"
+languageCode = "en"
+title = "CFEngine Build"
+theme = "cfbs-theme"
+
+# Number of posts per page
+Paginate = 10
+enableRobotsTXT = true
+disqusShortname = 'cfbuild-test'
+
+[params.info]
+homeTitle = "CFEngine Build" # Title for home page
+
+[params.suggested]
+modules = ['autorun.html', 'promise-type-git.html', 'client-initiated-reporting.html']
+
+[taxonomies]
+tag = "tags"
+author = "author"

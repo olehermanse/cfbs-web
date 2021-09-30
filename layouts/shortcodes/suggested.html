@@ -1,0 +1,7 @@
+
+{{ range $module :=  .Site.Params.Suggested.Modules }}
+  {{ with $.Site.GetPage (print  "modules/" $module) }}
+      {{ partial "module" . }}
+  {{ end }}
+{{ end }}
+
