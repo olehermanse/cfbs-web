@@ -1,0 +1,111 @@
+{{ partial "header" . }}
+<div class="list-page">
+    <div class="modules">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ul itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a href="/" itemid="/" itemprop="item" itemscope itemtype="http://schema.org/Thing">
+                            <span itemprop="name">Home</span>
+                        </a>
+                        <meta content="1" itemprop="position"/>
+                    </li>
+                    <li>/</li>
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <span itemid="/modules/" itemprop="item" itemscope itemtype="http://schema.org/Thing">
+                      <span itemprop="name">Modules</span>
+                    </span>
+                        <meta content="2" itemprop="position"/>
+                    </li>
+                </ul>
+            </div>
+            <div id="searchfor" style="display: none">
+                <span>Search result for <b></b></span>
+            </div>
+            <div class="modules-applied-tags" style="display: none">
+                <h3>Applied tags</h3>
+                <ul>
+                </ul>
+                <span><a href="javascript:;" onclick="removeAllTags()"><i class="bi bi-x-circle-fill"></i> Clear all</a></span>
+            </div>
+        </div>
+        <div class="container modules-container">
+            <div class="flex">
+                <div class="flex-grow">
+                    <div class="modules-wrapper">
+                        <div class="modules-top">
+                            <div class="flex-grow results-number">Found <span class="pagesCount"></span> results</div>
+                            <div>
+                                <label>
+                                    SORT BY
+                                    <div class="dropdown-select sort-by">
+                                        <span><div>Alphabetically</div> <i class="bi bi-chevron-down"></i></span>
+                                        <div class="dropdown-select_options">
+                                            <div data-value="alphabetically">Alphabetically</div>
+                                            <div data-value="relevance">Relevance</div>
+                                            <div data-value="most-download">Most download</div>
+                                            <div data-value="most-recent">Most recent</div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modules-list"></div>
+                    </div>
+                </div>
+                <div class="modules-right">
+                    <h3>Tags</h3>
+                    <div class="flex flex-space-between all-tags">
+                        <h3>Filter by Tag</h3> <a href="javascript:;" onclick="allTags(this)">All tags <i
+                            class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <div class="modules-right-tags_list">
+                        <div>
+                            <div class="supported" onclick="selectTag('supported')"><a href="#">supported</a></div>
+                            <div class="help-text">Modules that are supported and tested by CFEngine.</div>
+                        </div>
+                        <ul class="tags">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination container">
+            <label>
+                Rows per page
+                <div class="dropdown-select perPage">
+                    <span><div>10</div><i class="bi bi-chevron-down"></i></span>
+                    <div class="dropdown-select_options">
+                        <div data-value="5">5</div>
+                        <div data-value="10">10</div>
+                        <div data-value="25">25</div>
+                        <div data-value="50">50</div>
+                        <div data-value="100">100</div>
+                    </div>
+                </div>
+            </label>
+            <div class="pagination-summary">
+                <p><span id="startPage"></span>-<span id="endPage"></span> of <span class="pagesCount"></span></p>
+            </div>
+            <ul class="pagination-arrows">
+                <li>
+                    <a class="disabled" href="javascript:;" id="first_page" title="first page"><i class="bi bi-chevron-bar-left"></i></a>
+                </li>
+                <li>
+                    <a class="disabled" href="javascript:;" id="prev_page" title="previous page"><i class="bi bi-chevron-compact-left"></i></a>
+                </li>
+                <li>
+                    <a href="javascript:;" id="next_page" title="next page"><i class="bi bi-chevron-compact-right"></i></a>
+                </li>
+                <li>
+                    <a href="javascript:;" id="last_page" title="last page"><i class="bi bi-chevron-bar-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{{ partial "footer" . }}
+<script type="text/javascript" src="{{ "js/lunr.min.js" | relURL }}"></script>
+<script type="text/javascript" src="{{ "js/modules-list.js" | relURL }}"></script>

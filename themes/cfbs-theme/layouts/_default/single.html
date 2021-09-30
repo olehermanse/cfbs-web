@@ -1,0 +1,135 @@
+{{ partial "header" . }}
+<div class="container module-page">
+    <div class="breadcrumbs">
+        <ul itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a href="/" itemid="/" itemprop="item" itemscope itemtype="http://schema.org/Thing">
+                    <span itemprop="name">Home</span>
+                </a>
+                <meta content="1" itemprop="position"/>
+            </li>
+            <li>/</li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a href="/modules/" itemid="/modules/" itemprop="item" itemscope itemtype="http://schema.org/Thing">
+                    <span itemprop="name">Modules</span>
+                </a>
+                <meta content="2" itemprop="position"/>
+            </li>
+            <li>/</li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <span itemid="{{ .Permalink }}" itemprop="item" itemscope itemtype="http://schema.org/Thing">
+                      <span itemprop="name">{{ .Title }}</span>
+                    </span>
+                <meta content="3" itemprop="position"/>
+            </li>
+        </ul>
+    </div>
+    <div class="module-wrapper">
+        <div class="flex-grow module-page-info">
+            <div class="flex">
+                <div>
+                    <div class="relative flex">
+                        <h1 class="flex-grow">{{ .Title }}</h1><i class="bi bi-link-45deg copy-link"></i>
+                        <div style="display: none" class="link-copied">
+                            Link Copied!
+                        </div>
+                    </div>
+                    <div class="module-page_subtitle">{{ .Params.Description }}</div>
+
+                    <div class="top-links">
+                        <a href="{{ .Params.Repo }}/tree/{{ .Params.Commit }}/{{ .Params.Subdirectory }}" target="_blank">Documentation</a>
+                        <a href="{{ .Params.Repo }}/issues" target="_blank">Report issue</a>
+                    </div>
+                </div>
+                <div>
+                    <a style="display: none" class="btn btn-secondary btn-secondary-light" href="#">follow</a>
+                </div>
+            </div>
+        </div>
+        <div class="maintainer-wrapper">
+        <div class="maintainer">
+            <h4>Maintainer</h4>
+            <div class="flex flex--align_center author">
+                <div>
+                    <img height="60" src="{{ .Params.Author.Image }}" width="60"/>
+                </div>
+                <div>
+                    {{ .Params.Author.Name }}
+                </div>
+            </div>
+            <h4>Module stats</h4>
+            <div class="stats">
+                <div><i class="bi bi-download"></i> Total Downloads: {{ .Params.Downloads }}</div>
+                <div><i class="bi bi-clock-history"></i> Updated: {{ .Params.Updated }}</div>
+            </div>
+            {{ if .Params.Versions }}
+            <h4>Installation version</h4>
+            <div class="version flex flex--align_center">
+                <div>Version</div>
+                {{ (index .Params.Versions 0) }}
+                <div class="dropdown-select">
+                    <span>1.1.0 <i class="bi bi-chevron-down"></i></span>
+                    <div class="dropdown-select_options">
+                        {{ range $version, $released := .Params.Versions }}
+                        <div data-released="{{ $released }}">{{ $version }}</div>
+                        {{ end }}
+                    </div>
+                </div>
+                <div>Releases on {{ .Params.Updated }}</div>
+            </div>
+            {{ end }}
+            {{ if .Params.Tags }}
+            <h4>Tags</h4>
+            <div class="modules-item_tags tags">
+                <ul>
+                    {{ range .Params.tags }}
+                    <li class="{{ . | urlize }}">
+                        <a href="{{ "/modules/?tag=" | relURL }}{{ . }}">{{ . }}</a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+        </div>
+        </div>
+        <div class="module-desc">
+            <div class="installation-block">
+                <h2>Installation</h2>
+                <div class="relative">
+                    <pre>
+                    <div class="command">cfbs add {{ .Params.Id }}</div>
+                </pre>
+                    <i class="bi bi-clipboard copy" data-closest="div" data-copyfrom=".command"></i>
+                </div>
+            </div>
+            <div>
+                <div class="tabs">
+                    <div class="active" data-tab="1">Description</div>
+                    <div data-tab="2">Dependencies</div>
+                    <div data-tab="3">Comments</div>
+                </div>
+                <div class="tabs-content-wrapper">
+                    <div class="tabs-content opened" id="tab1">{{ .Content }}</div>
+                    <div class="tabs-content" id="tab2">
+                        <h2>Dependencies</h2>
+                        {{ if .Params.Dependencies }}
+                        <ul>
+                            {{ range .Params.Dependencies }}
+                            <li class="{{ . | urlize }}">
+                                <a href="{{ "/modules/" | relURL }}{{ . }}">{{ . }}</a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                        {{ else }}
+                        <p>This module has no dependencies</p>
+                        {{ end }}
+                    </div>
+                    <div class="tabs-content" id="tab3">{{ template "_internal/disqus.html" . }}</div>
+                </div>
+        </div>
+    </div>
+
+    </div>
+
+</div>
+{{ partial "footer" . }}

@@ -1,0 +1,63 @@
+.blocks {
+
+  &-inner {
+    justify-content: space-between;
+    @media @tablet-down {
+      justify-content: center;
+    }
+
+  }
+  .block {
+    background: @white;
+    .shadowed();
+    border-radius: 1rem;
+    max-width: 100%;
+    width: 47rem;
+
+    margin-bottom: 7rem;
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.8rem;
+      line-height: 4.4rem;
+      border-bottom: @borderLightGray 1px solid;
+      padding: 2rem 5rem 0 5rem;
+      max-height: 7rem;
+    }
+
+    &-body {
+      padding: 2rem 5rem 0 5rem;
+      @media @phone-down {
+        padding: 2rem 2rem 0 2rem;
+      }
+      h3 {
+        font-size: 2.2rem;
+        line-height: 3.4rem;
+        margin-bottom: 3rem;
+      }
+      p{
+        font-size: 1.6rem;
+        line-height: 2.9rem;
+        color: @textColorGray;
+        margin-top: 3rem;
+      }
+      .btn {
+        margin: 4rem 0;
+      }
+
+
+      &-img {
+        height: 30rem;
+        vertical-align: bottom;
+        display: flex;
+
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          margin: auto;
+          vertical-align: bottom;
+        }
+      }
+    }
+  }
+}

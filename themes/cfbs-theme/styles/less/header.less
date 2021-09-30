@@ -1,0 +1,478 @@
+header {
+
+  height: 5rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid @gray-100;
+
+  @media @phone-down {
+    height: 1rem;
+  }
+  .logo-container {
+    width: 21.5rem;
+    margin-top: -6px;
+    @media @phone-down {
+      flex-grow: 1;
+    }
+  }
+
+  .search {
+    margin-left: 4.4rem;
+    width: 33.1rem;
+    height: 4.5rem;
+    background: @gray-50;
+    border-radius: 4rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1.4rem 0 2.2rem;
+
+   @media @wide-screen-down {
+     width: 31rem;
+     margin-left: 2.8rem;
+  }
+
+    @media @tablet-down {
+      width: 24rem;
+      margin-left: 0;
+    }
+
+    input {
+      flex-grow: 1;
+      border: none;
+      background: none;
+
+      &:focus-visible, &:focus {
+        border: none;
+        outline: none;
+      }
+
+      &, &::placeholder {
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        color: @gray-400;
+      }
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: @blue-700;
+      font-size: 2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+}
+
+.main-menu {
+  justify-content: space-between;
+  align-items: center;
+
+@media @tablet-down {
+  flex-wrap: wrap;
+  justify-content: start;
+}
+  .search-wrapper {
+    @media @tablet-down {
+      flex-grow: 1;
+      margin-left: 2.4rem;
+    }
+    @media @phone-down {
+      flex-grow: 1;
+      width: 100%;
+      margin-left: 0;
+
+        position: absolute;
+        top: 5rem;
+        width: calc(100% - 7rem);
+      .search {
+        width: 100%;
+      }
+
+
+    }
+
+  }
+  @media @tablet-down {
+    flex-wrap: wrap;
+  }
+  .user {
+    color: @gray-900;
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    border-bottom: 1px solid @gray-200;
+    display: flex;
+    align-content: center;
+    padding: 1.6rem 0 1.1rem 2rem;
+    i {
+      margin-right: 1rem;
+      display: block;
+    }
+  }
+
+  .parent {
+    cursor: default;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+
+  > ul > li > a {
+    &:hover, &:focus {
+      color: @orange;
+    }
+  }
+
+  ul li ul {
+    a {
+      display: block;
+      padding-right: 3rem;
+      color: @textColorGray;
+    }
+  }
+
+  a:focus {
+    border: none;
+    outline: none;
+  }
+
+  .dropdown .bi {
+    @media @tablet-down {
+      margin-right: 2rem;
+    }
+  }
+
+  .links {
+    @media @tablet-down {
+      display: none;
+      flex-direction: column;
+      background: @white;
+      z-index: 10;
+      width: 100%;
+      order: 10;
+      left: 0;
+      border-top: 1px solid darken(@borderLightGray, 5%);
+      box-shadow: 0px 22px 32px rgba(11, 19, 42, 0.1);
+      position: absolute;
+      top: 7.5rem;
+    }
+    @media @phone-down {
+      top: 3.5rem;
+    }
+
+    > li {
+      line-height: 4rem;
+      padding-left: 3rem;
+      @media @tablet-down {
+        line-height: 5.2rem;
+      }
+
+      @media @wide-screen-down {
+        padding-left: 2.4rem;
+      }
+
+      &:last-child {
+        @media @tablet-down {
+          padding-left: 0;
+        }
+      }
+
+      img {
+        padding-left: .3rem;
+      }
+
+      ul li img {
+        padding-left: 2rem;
+      }
+
+      &.opened {
+        img {
+          @media @tablet-down {
+            padding-left: 0;
+          }
+        }
+      }
+
+      @media @tablet-down {
+        padding-left: 0;
+        border-bottom: 1px solid darken(@borderLightGray, 5%);
+        &:last-child {
+          border: none;
+        }
+
+        &.opened {
+          > a, >i {
+            color: @orange;
+          }
+
+          >i {
+            transform: rotate(180deg);
+          }
+
+          .dropdown-content {
+            display: inline-block;
+            height: auto;
+            min-width: 16rem;
+            width: max-content;
+            overflow: visible;
+          }
+        }
+      }
+    }
+  }
+
+
+
+  a {
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: @textColorDarkBlue;
+    text-decoration: none;
+    vertical-align: middle;
+  }
+
+  ul {
+    a, .btn {
+      @media @tablet-down {
+        font-weight: bold;
+        font-size: 1.6rem;
+        line-height: 2rem;
+        padding-left: 2.5rem;
+        margin: 1.6rem 0;
+      }
+    }
+
+    .btn-secondary {
+      @media @tablet-down {
+        border: none;
+        background: none;
+        padding: 0 0 0 2.5rem;
+        color: @textColorDarkBlue;
+        &:hover {
+          background: none;
+          border: none;
+          padding: 0 0 0 2.5rem;
+          color: @orange;
+        }
+      }
+    }
+
+    li {
+      ul {
+        a {
+          @media @tablet-down {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            color: @MainMenuTextColor;
+          }
+        }
+      }
+    }
+  }
+
+  .collapse {
+    display: none;
+    cursor: pointer;
+    padding-right: 2rem;
+
+    &-close {
+      display: none;
+    }
+
+    &.opened {
+      .collapse-close {
+        display: block;
+        max-width: 2.5rem;
+      }
+
+      .collapse-open {
+        display: none;
+      }
+    }
+  }
+
+  @media @tablet-down {
+    .collapse, .try {
+      display: inline-block;
+    }
+  }
+
+  @media @phone-down {
+    .try .btn {
+      min-width: 30vw;
+    }
+
+    .collapse {
+      display: inline-block;
+    }
+
+    img.logo {
+      width: 16.8rem;
+    }
+  }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  &:last-child {
+    .dropdown-content {
+      right: 0;
+    }
+  }
+
+  @media @tablet-down {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+
+  &-content {
+    z-index: 25;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+    background-color: @white;
+    border-radius: 1rem;
+    padding: 1.5rem 0;
+    .shadowed();
+
+    li {
+      padding: 0 3rem;
+      @media @tablet-down {
+        padding: 0;
+      }
+
+      z-index: 0;
+
+      a {
+        flex-basis: 100%;
+      }
+
+      img {
+        margin-top: 2rem;
+        position: absolute;
+        right: .7rem;
+        top: 1.1rem;
+        @media @tablet-down {
+          display: none;
+        }
+      }
+
+      > ul {
+        position: absolute;
+        right: calc(-100% - 2.4rem);
+        background-color: @white;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        border-radius: 1rem;
+        padding: 1.5rem 0;
+        top: -1.5rem;
+        .shadowed();
+
+        @media @tablet-down {
+          display: block;
+          height: auto;
+          min-width: 16rem;
+          width: max-content;
+          overflow: visible;
+          position: relative;
+          right: 0;
+          background: none;
+          box-shadow: none;
+          padding: 0;
+          li {
+            padding: 0 1.5rem;
+          }
+        }
+      }
+
+      &:hover, &:focus, &:focus-within, &.active {
+        &:before {
+          background: #d8d8d85e;
+          content: " ";
+          display: block;
+          width: calc(100% - 2rem);
+          position: absolute;
+          height: calc(100% - 0.2rem);
+          z-index: -1;
+          left: 0;
+          margin: 0.1rem 1rem 0 1rem;
+          border-radius: 1rem;
+          @media @tablet-down {
+            display: none;
+          }
+        }
+
+        > ul {
+          height: auto;
+          min-width: 16rem;
+          width: max-content;
+          overflow: visible;
+        }
+      }
+    }
+
+    @media @tablet-down {
+      position: relative;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      flex-basis: 100%;
+      border: none;
+      background: #F2F2F4;
+      a {
+        font-size: 2.2rem;
+        line-height: 5.4rem;
+      }
+
+      ul {
+        margin: 2rem 0;
+      }
+
+      li {
+        line-height: 3rem;
+      }
+    }
+  }
+
+  i.bi {
+    display: inline-block;
+    font-size: 1.4rem;
+    margin-left: 1rem;
+    vertical-align: sub;
+  }
+
+  @media screen and @desktop-up {
+    &:hover &-content, &:focus &-content, &:focus-within &-content{
+      height: auto;
+      min-width: 16rem;
+      width: max-content;
+      overflow: visible;
+    }
+  }
+
+  &:hover {
+    > a {
+      color: @orange;
+    }
+
+    i.bi-chevron-down {
+      transform: rotate(180deg);
+      color: @orange;
+    }
+
+    div.close {
+      height: 0;
+      width: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+  }
+}

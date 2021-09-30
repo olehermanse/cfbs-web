@@ -1,0 +1,17 @@
+.padding-loop (@i, @position, @unit:rem) when (@i > 0) {
+  .padding-@{position}_@{i} {
+    padding-@{position}: ~'@{i}@{unit}!important';
+  }
+  .padding-loop(@i - 1, @position);
+}
+
+.margin-loop (@i, @position, @unit:rem) when (@i > 0) {
+  .margin-@{position}_@{i} {
+    margin-@{position}: ~'@{i}@{unit}!important';
+  }
+  .margin-loop(@i - 1, @position);
+}
+
+.shadowed {
+  box-shadow: 0 2.2rem 3.2rem @shadowColor;
+}

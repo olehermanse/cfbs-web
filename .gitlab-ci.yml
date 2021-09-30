@@ -1,0 +1,31 @@
+variables:
+  DOCKER_REPOSITORY: registry.mender.io/cfengine/cfbuild
+  DOCKERFILE: Containerfile
+
+include:
+  - project: 'Northern.tech/Mender/mendertesting'
+    file: '.gitlab-ci-check-docker-build.yml'
+  - project: 'Northern.tech/Mender/mendertesting'
+    file: '.gitlab-ci-check-docker-deploy.yml'
+
+stages:
+  - build
+  - publish
+  - sync
+
+publish:image:
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
+
+sync:image:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "production"'
+  variables:
+    TARGET_MANIFEST_FILE: "kubernetes/cpm-directory/cpm-directory-deployment.yaml"
+
+sync:image:staging:
+  extends: sync:image
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+  variables:
+    TARGET_MANIFEST_FILE: "kubernetes/staging-cpm-directory/staging-cpm-directory-deployment.yaml"
