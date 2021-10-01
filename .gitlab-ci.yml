@@ -1,6 +1,6 @@
 variables:
   DOCKER_REPOSITORY: registry.mender.io/cfengine/cfbuild
-  DOCKERFILE: Containerfile
+  DOCKERFILE: Dockerfile
 
 include:
   - project: 'Northern.tech/Mender/mendertesting'
