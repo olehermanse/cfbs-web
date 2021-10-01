@@ -1,6 +1,6 @@
 variables:
   DOCKER_REPOSITORY: registry.mender.io/cfengine/cfbuild
-  DOCKERFILE: Containerfile
+  DOCKERFILE: Dockerfile
 
 include:
   - project: 'Northern.tech/Mender/mendertesting'
@@ -21,11 +21,11 @@ sync:image:
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
   variables:
-    TARGET_MANIFEST_FILE: "kubernetes/cpm-directory/cpm-directory-deployment.yaml"
+    TARGET_MANIFEST_FILE: "kubernetes/build-cfengine-com/build-cfengine-com.yaml"
 
 sync:image:staging:
   extends: sync:image
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
   variables:
-    TARGET_MANIFEST_FILE: "kubernetes/staging-cpm-directory/staging-cpm-directory-deployment.yaml"
+    TARGET_MANIFEST_FILE: "kubernetes/build-cfengine-com/staging-build-cfengine-com.yaml"
