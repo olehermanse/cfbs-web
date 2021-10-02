@@ -17,6 +17,10 @@ publish:image:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
 
+publish:image:mender:
+  rules:
+    - when: never
+
 sync:image:
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
