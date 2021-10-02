@@ -13,6 +13,17 @@ stages:
   - publish
   - sync
 
+build:docker:
+  script:
+    - echo "building ${CI_PROJECT_NAME} for ${DOCKER_BUILD_SERVICE_IMAGE}"
+    - docker build
+        --tag $DOCKER_BUILD_SERVICE_IMAGE
+        --file ${DOCKER_DIR:-.}/${DOCKERFILE:-Dockerfile}
+        --build-arg GIT_COMMIT_TAG="${DOCKER_PUBLISH_COMMIT_TAG}"
+        --build-arg GITHUB_USERNAME_TOKEN
+        ${DOCKER_DIR:-.}
+    - docker save $DOCKER_BUILD_SERVICE_IMAGE > image.tar
+
 publish:image:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^(master|production)$/'
