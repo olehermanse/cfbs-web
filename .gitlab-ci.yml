@@ -25,11 +25,11 @@ sync:image:
   rules:
     - if: '$CI_COMMIT_BRANCH == "production"'
   variables:
-    TARGET_MANIFEST_FILE: "kubernetes/build-cfengine-com/build-cfengine-com.yaml"
+    TARGET_MANIFEST_FILE: "kubernetes/build-cfengine-com/build-cfengine-com-deployment.yaml"
 
 sync:image:staging:
   extends: sync:image
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
   variables:
-    TARGET_MANIFEST_FILE: "kubernetes/build-cfengine-com/staging-build-cfengine-com.yaml"
+    TARGET_MANIFEST_FILE: "kubernetes/staging-build-cfengine-com/staging-build-cfengine-com-deployment.yaml"
