@@ -21,12 +21,12 @@
         {
           "name": "Developer Resources",
           "url": "https://cfengine.com/developers/",
-          "target": ""
+          "target": "_blank"
         },
         {
           "name": "Downloads",
           "url": "https://cfengine.com/downloads/quick-install/",
-          "target": ""
+          "target": "_blank"
         },
         {
           "name": "Documentation",
@@ -46,18 +46,18 @@
       "About CFEngine": [
         {
           "name": "Overview",
-          "url": "/product-overview/",
-          "target": ""
+          "url": "https://cfengine.com/product-overview/",
+          "target": "_blank"
         },
         {
           "name": "Features",
-          "url": "/features/",
-          "target": ""
+          "url": "https://cfengine.com/features/",
+          "target": "_blank"
         },
         {
           "name": "Community vs Enterprise",
-          "url": "/community-vs-enterprise-comparison/",
-          "target": ""
+          "url": "https://cfengine.com/community-vs-enterprise-comparison/",
+          "target": "_blank"
         }
       ]
     },
@@ -65,13 +65,13 @@
       "Resources": [
         {
           "name": "Developer Resources",
-          "url": "/developers/",
-          "target": ""
+          "url": "https://cfengine.com/developers/",
+          "target": "_blank"
         },
         {
           "name": "Downloads",
-          "url": "/downloads/quick-install/",
-          "target": ""
+          "url": "https://cfengine.com/downloads/quick-install/",
+          "target": "_blank"
         },
         {
           "name": "Documentation",
@@ -99,7 +99,8 @@
         },
         {
           "name": "Contact Us",
-          "url": "/contact/"
+          "url": "https://cfengine.com/contact/",
+          "target": "_blank"
         }
       ]
     }
