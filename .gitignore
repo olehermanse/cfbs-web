@@ -5,4 +5,5 @@ scripts/get_cache.json
 scripts/get_cache.json.log
 ./node
 node_modules/
+static/js/bundles
 .vscode/

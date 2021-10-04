@@ -1,9 +1,12 @@
 {
-  "dependencies": {
+  "devDependencies": {
     "got": "^11.8.2",
     "grunt": "^1.4.1",
     "grunt-cli": "^1.4.3",
-    "string": "^3.3.3",
-    "lunr": "^2.3.9"
+    "grunt-contrib-less": "^3.0.0",
+    "grunt-contrib-uglify": "^5.0.1",
+    "jit-grunt": "^0.10.0",
+    "lunr": "^2.3.9",
+    "string": "^3.3.3"
   }
 }
