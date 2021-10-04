@@ -3,6 +3,33 @@ const got = require("got");
 const path = require("path");
 const CONTENT_PATH_PREFIX = "./content/modules";
 module.exports = function (grunt) {
+    require('jit-grunt')(grunt);
+    grunt.initConfig({
+        less: {
+            development: {
+                options: {
+                    compress: true,
+                    yuicompress: true,
+                    optimization: 2
+                },
+                files: {
+                    "./themes/cfbs-theme/static/css/style.min.css": "./themes/cfbs-theme/styles/cfbs.less"
+                }
+            }
+        },
+        uglify: {
+            options: {
+                sourceMap: false
+            },
+            build: {
+                files: {
+                    './static/js/bundles/main.js': ['./static/js/main.js'],
+                    './static/js/bundles/modules-page.js': ['./node_modules/lunr/lunr.js', './static/js/modules-list.js'],
+                }
+            }
+        },
+    });
+
     grunt.registerTask("lunr-index", function () {
         let indexPages = function () {
             let pagesIndex = [];
@@ -149,4 +176,6 @@ module.exports = function (grunt) {
         }
         done();
     });
+
+    grunt.registerTask('build', ['modules-update', 'lunr-index', 'copy-lunr-src', 'less', 'uglify']);
 };
