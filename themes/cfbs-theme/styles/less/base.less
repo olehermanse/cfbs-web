@@ -263,3 +263,9 @@ h1 {
 .blue-600 {
   color: @blue-600;
 }
+
+// set min-height of the main container equal to 100 viewport height minus footer and header heights
+// to show footer on the bottom at every scales and content sizes
+header + div {
+  min-height: calc(100vh - 38rem);
+}
