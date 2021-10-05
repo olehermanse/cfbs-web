@@ -31,7 +31,7 @@
                             {{ end }}
                             </ul>
                             {{ else }}
-                            <a {{ with .id }} id="{{ . }}" {{ end }} {{ with .target }} target="{{ . }}" {{ end }} href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
+                            <a {{ with .id }} id="{{ . }}" {{ end }} {{ with .target }} target="{{ . }}" {{ end }}  {{ with .dataModal }}data-modal="{{ . }}"{{ end }} href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
                             {{ end }}
                         </li>
                         {{ end }}
