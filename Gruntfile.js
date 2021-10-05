@@ -1,6 +1,3 @@
-const S = require("string");
-const got = require("got");
-const path = require("path");
 const CONTENT_PATH_PREFIX = "./content/modules";
 module.exports = function (grunt) {
     require('jit-grunt')(grunt);
@@ -55,24 +52,18 @@ module.exports = function (grunt) {
                 console.error(e.message);
             }
 
-            let href = S(abspath).chompLeft(CONTENT_PATH_PREFIX).chompRight(".html").s.replace('content/', '/');
+            let href = abspath.replace(/^(\.\/content\/modules)/,"").replace(/(\.html$)/, "").replace('content/', '/');
 
             // Build Lunr index for this page
             pageIndex = {
                 ...frontMatter,
-                href: href,
-                content: S(content[1]).trim().stripTags().stripPunctuation().s
+                href: href
             };
 
             return pageIndex;
         };
         grunt.file.write("./static/js/lunr/PagesIndex.json", JSON.stringify(indexPages()));
         grunt.log.ok("Index built");
-    });
-
-    grunt.registerTask("copy-lunr-src", function () {
-        grunt.file.copy("./node_modules/lunr/lunr.min.js", './static/js/lunr.min.js');
-        grunt.log.ok("lunr.min.js copied");
     });
 
     const got = require('got')
@@ -101,14 +92,15 @@ module.exports = function (grunt) {
 
             if (!module.hasOwnProperty('alias')) {
 
-                const authorRepo = S(module.repo).chompLeft("https://github.com/").toString();
+                const authorRepo = module.repo.replace(/^(https\:\/\/github\.com\/)/, "").toString();
 
                 const repoInfo = await got('https://api.github.com/repos/' + authorRepo, {headers}).json();
 
                 const revision = module.commit || 'master';
 
                 // author
-                const owner = S(module.by).chompLeft("https://github.com/").toString();
+                const owner = module.by.replace(/^(https\:\/\/github\.com\/)/, "").toString();
+
                 if (!authors.hasOwnProperty(owner)) { // if no author -> write
                     const authorResponse = await got('https://api.github.com/users/' + owner, {headers}).json();
                     authors[owner] = authorResponse;
@@ -177,5 +169,5 @@ module.exports = function (grunt) {
         done();
     });
 
-    grunt.registerTask('build', ['modules-update', 'lunr-index', 'copy-lunr-src', 'less', 'uglify']);
+    grunt.registerTask('build', ['modules-update', 'lunr-index', 'uglify', 'less']);
 };

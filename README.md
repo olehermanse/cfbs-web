@@ -24,13 +24,10 @@ Use at your own risk!
 ## Build
 
 ```
-export GITHUB_USERNAME_TOKEN='place githubName@token here'
+export GITHUB_USERNAME_TOKEN='place githubName:token here'
 npm install
 npm install -g grunt-cli
-grunt modules-update
-grunt lunr-index
-grunt copy-lunr-src
-npx -p less lessc --compress /cfbs-web/themes/cfbs-theme/styles/cfbs.less /cfbs-web/themes/cfbs-theme/static/css/style.min.css
+grunt build
 hugo
 ```
 
@@ -50,7 +47,7 @@ hugo serve
 Using docker / podman to build and serve is fairly straight forward:
 
 ```
-export GITHUB_USERNAME_TOKEN='place githubName@token here'
+export GITHUB_USERNAME_TOKEN='place githubName:token here'
 docker build --build-arg GITHUB_USERNAME_TOKEN --tag cfbs-website -f Dockerfile .
 docker run -p 80:80 --name cfbs-website --rm cfbs-website
 ```
