@@ -70,11 +70,6 @@ module.exports = function (grunt) {
         grunt.log.ok("Index built");
     });
 
-    grunt.registerTask("copy-lunr-src", function () {
-        grunt.file.copy("./node_modules/lunr/lunr.min.js", './static/js/lunr.min.js');
-        grunt.log.ok("lunr.min.js copied");
-    });
-
     const got = require('got')
     grunt.registerTask("modules-update", async function () {
         const done = this.async();
@@ -177,5 +172,5 @@ module.exports = function (grunt) {
         done();
     });
 
-    grunt.registerTask('build', ['modules-update', 'lunr-index', 'copy-lunr-src', 'less', 'uglify']);
+    grunt.registerTask('build', ['modules-update', 'lunr-index', 'uglify', 'less']);
 };
