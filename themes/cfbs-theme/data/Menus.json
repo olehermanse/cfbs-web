@@ -11,6 +11,11 @@
         {
           "name": "Supported modules",
           "url": "/modules/?tag=supported"
+        },
+        {
+          "name": "Publish a module",
+          "url": "#",
+          "dataModal": "publishModal"
         }
       ]
     },
