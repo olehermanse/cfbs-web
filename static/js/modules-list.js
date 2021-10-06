@@ -21,7 +21,6 @@ fetch('/js/lunr/PagesIndex.json')
             this.field("title", {boost: 50});
             this.field("description", {boost: 25});
             this.field("tags", {boost: 5});
-            this.field("content");
             this.ref("href");
             index.map(page => this.add(page));
         });
