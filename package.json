@@ -6,7 +6,6 @@
     "grunt-contrib-less": "^3.0.0",
     "grunt-contrib-uglify": "^5.0.1",
     "jit-grunt": "^0.10.0",
-    "lunr": "^2.3.9",
-    "string": "^3.3.3"
+    "lunr": "^2.3.9"
   }
 }
