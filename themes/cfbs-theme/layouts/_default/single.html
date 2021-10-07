@@ -29,10 +29,13 @@
             <div class="flex">
                 <div>
                     <div class="relative flex">
-                        <h1>{{ .Title }}</h1><i class="bi bi-link-45deg copy-link"></i>
+                        <h1>{{ .Title }}</h1>
+                        <div class="relative">
+                        <i class="bi bi-link-45deg copy-link"></i>
                         <div style="display: none" class="link-copied">
                             Link Copied!
                         </div>
+                    </div>
                     </div>
                     <div class="module-page_subtitle">{{ .Params.Description }}</div>
 

@@ -177,19 +177,19 @@ function renderModules(results) {
          <p class="modules-item_description">
             ${result.description}
          </p>
+         <div class="modules-item_tags tags">
+          <ul>
+              ${result.tags.map(tag => ` <li class="${tag.toLowerCase()}">
+                <a onclick="selectTag('${tag}')" href="#">${tag}</a>
+             </li>`).join('')}
+          </ul>
+        </div>
       </div>
       <div class="right-info">
          <div>${result.version ? 'Version:' + result.version : ''}</div>
          <div>Updated: ${result.updated}</div>
          <div>Total downloads: ${result.downloads}</div>
       </div>
-   </div>
-   <div class="modules-item_tags tags">
-      <ul>
-          ${result.tags.map(tag => ` <li class="${tag.toLowerCase()}">
-            <a onclick="selectTag('${tag}')" href="#">${tag}</a>
-         </li>`).join('')}
-      </ul>
    </div>
 </article>`
     });
