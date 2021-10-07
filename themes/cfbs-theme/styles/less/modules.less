@@ -65,7 +65,7 @@
       }
 
       span {
-        margin-left: 2.4rem;
+        margin-left: .9rem;
         background: none;
         color: @gray-600;
         font-size: 1.2rem;
@@ -73,6 +73,16 @@
         a, i {
           color: @gray-400;
           text-decoration: none;
+        }
+        a {
+          line-height: 2rem;
+          padding: 0 .8rem;
+          display: inline-block;
+          padding: .6rem 1.5rem;
+          &:hover {
+            background: @gray-50;
+            border-radius: .4rem;
+          }
         }
       }
     }
@@ -173,6 +183,13 @@
         font-size: 1.4rem;
         line-height: 1.6rem;
         font-weight: 500;
+      }
+
+      &_tags {
+        margin-top: 2rem;
+        @media @phone-down {
+          margin-top: 1.2rem;
+        }
       }
     }
 
@@ -354,6 +371,7 @@
       a {
         color: #181929;
         text-decoration: none;
+        border-radius: .2rem;
       }
 
       &.supported {

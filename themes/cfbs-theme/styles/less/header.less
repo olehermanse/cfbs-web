@@ -24,6 +24,11 @@ header {
     display: flex;
     align-items: center;
     padding: 0 1.4rem 0 2.2rem;
+    border: 2px solid transparent;
+
+    &:focus-within {
+      border: 2px solid #1F91F5;
+    }
 
    @media @wide-screen-down {
      width: 31rem;
@@ -39,18 +44,20 @@ header {
       flex-grow: 1;
       border: none;
       background: none;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      color: @textColorDarkBlue;
 
       &:focus-visible, &:focus {
         border: none;
         outline: none;
       }
 
-      &, &::placeholder {
-        font-weight: 500;
-        font-size: 1.6rem;
-        line-height: 2.4rem;
+      &::placeholder {
         color: @gray-400;
       }
+
     }
 
     button {
@@ -120,8 +127,13 @@ header {
   }
 
   > ul > li > a {
-    &:hover, &:focus {
+    &:hover {
       color: @orange;
+    }
+    @media @tablet-down {
+      &:focus {
+        color: @orange;
+      }
     }
   }
 
@@ -449,8 +461,15 @@ header {
     vertical-align: sub;
   }
 
-  @media screen and @desktop-up {
-    &:hover &-content, &:focus &-content, &:focus-within &-content{
+  &:hover &-content {
+    height: auto;
+    min-width: 16rem;
+    width: max-content;
+    overflow: visible;
+  }
+
+  @media screen and @tablet-down {
+    &:focus &-content, &:focus-within &-content{
       height: auto;
       min-width: 16rem;
       width: max-content;

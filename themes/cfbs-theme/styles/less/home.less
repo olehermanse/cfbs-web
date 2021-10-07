@@ -45,12 +45,27 @@
       i {
         vertical-align: middle;
       }
+      @keyframes dissolve {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+
       &:hover, &:focus {
         padding-right: 0.5rem;
         .bi {
           font-size: 2rem;
           &:before {
             content: "\f135";
+            animation: dissolve .2s ease-in-out;
+            animation-iteration-count: 1;
           }
         }
       }
@@ -250,16 +265,13 @@
   }
   .new-to-cfe {
     padding-bottom: 10rem;
-    background: @white;
-    background-image: url("/images/home/circles.svg");
-    background-repeat: no-repeat;
-    background-position: bottom -11rem left;
-    background-size: 13%;
-    @media @phone-mini-down {
-      background-size: 25%;
+    background: url("/images/home/circles.svg") no-repeat bottom -29rem left;
+
+    @media @wide-screen-down {
+      background-position: bottom -32rem left;
     }
-    @media @tablet-down {
-      background-position: bottom left;
+    @media @phone-mini-down {
+      background-position: bottom -34rem left;
     }
     .container {
       display: flex;
@@ -296,6 +308,7 @@
         margin-bottom: 1.6rem;
         i {
           color: @orange;
+          margin-left: .8rem;
         }
       }
     }
