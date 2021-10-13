@@ -146,6 +146,8 @@ module.exports = function (grunt) {
                     }),
                     "downloads": Math.floor(Math.random() * 10000),
                     "repo": module.repo,
+                    "documentation": module.documentation || null,
+                    "website": module.website || null,
                     "subdirectory": module.subdirectory,
                     "commit": module.commit,
                     "dependencies": module.dependencies || [],
