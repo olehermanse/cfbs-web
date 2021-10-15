@@ -113,14 +113,14 @@ module.exports = function (grunt) {
                 let extension = '.html';
 
                 try {
-                    content = await got(`https://api.github.com/repos/${authorRepo}/readme/${module.subdirectory || ''}`, {headers: {...headers, ...{"Accept": 'application/vnd.github.v3.html'}}}).text();
+                    content = await got(`https://api.github.com/repos/${authorRepo}/readme/${module.subdirectory || ''}?ref=${revision}`, {headers: {...headers, ...{"Accept": 'application/vnd.github.v3.html'}}}).text();
 
                     // replace src and links from relative to absolute
                     let srcReg = /src="(?!(http|file:).*)/gi
                     let hrefReg = reg = /href="(?!(http|file:).*)/gi
                     content = content
-                        .replaceAll(srcReg, `src="https://raw.githubusercontent.com/${authorRepo}/${revision}/`)
-                        .replaceAll(hrefReg, `href="https://github.com/${authorRepo}/blob/${revision}/`);
+                        .replace(srcReg, `src="https://raw.githubusercontent.com/${authorRepo}/${revision}/`)
+                        .replace(hrefReg, `href="https://github.com/${authorRepo}/blob/${revision}/`);
                 } catch (e) {
                     content = 'Readme not found'
                 }
@@ -146,6 +146,8 @@ module.exports = function (grunt) {
                     }),
                     "downloads": Math.floor(Math.random() * 10000),
                     "repo": module.repo,
+                    "documentation": module.documentation || null,
+                    "website": module.website || null,
                     "subdirectory": module.subdirectory,
                     "commit": module.commit,
                     "dependencies": module.dependencies || [],

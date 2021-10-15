@@ -29,15 +29,20 @@
             <div class="flex">
                 <div>
                     <div class="relative flex">
-                        <h1>{{ .Title }}</h1><i class="bi bi-link-45deg copy-link"></i>
+                        <h1>{{ .Title }}</h1>
+                        <div class="relative">
+                        <i class="bi bi-link-45deg copy-link"></i>
                         <div style="display: none" class="link-copied">
                             Link Copied!
                         </div>
                     </div>
+                    </div>
                     <div class="module-page_subtitle">{{ .Params.Description }}</div>
 
                     <div class="top-links">
-                        <a href="{{ .Params.Repo }}/tree/{{ .Params.Commit }}/{{ .Params.Subdirectory }}" target="_blank">Documentation</a>
+                        <a href="{{ .Params.Repo }}/tree/{{ .Params.Commit }}/{{ .Params.Subdirectory }}" target="_blank">Repository</a>
+                        {{ if .Params.Documentation }}<a href="{{ .Params.Documentation }}" target="_blank">Documentation</a>{{ end }}
+                        {{ if .Params.Website }}<a href="{{ .Params.Website }}" target="_blank">Website</a>{{ end }}
                         <a href="{{ .Params.Repo }}/issues" target="_blank">Report issue</a>
                     </div>
                 </div>

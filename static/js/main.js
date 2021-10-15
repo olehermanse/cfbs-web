@@ -48,6 +48,7 @@ const collapse = document.querySelector('.collapse');
 
 const dropDownHandler = function (element) {
     const openedClass = "opened";
+    document.querySelector('li.dropdown.opened').classList.remove('opened');
     const li = element.closest('li');
     if (li.className.indexOf(openedClass) == -1) {
         li.className += ` ${openedClass}`;

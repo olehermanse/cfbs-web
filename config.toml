@@ -6,7 +6,7 @@ theme = "cfbs-theme"
 # Number of posts per page
 Paginate = 10
 enableRobotsTXT = true
-disqusShortname = 'cfbuild-test'
+disqusShortname = 'cfengine-build'
 
 [params.info]
 homeTitle = "CFEngine Build" # Title for home page

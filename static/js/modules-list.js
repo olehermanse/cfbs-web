@@ -21,7 +21,6 @@ fetch('/js/lunr/PagesIndex.json')
             this.field("title", {boost: 50});
             this.field("description", {boost: 25});
             this.field("tags", {boost: 5});
-            this.field("content");
             this.ref("href");
             index.map(page => this.add(page));
         });
@@ -178,19 +177,19 @@ function renderModules(results) {
          <p class="modules-item_description">
             ${result.description}
          </p>
+         <div class="modules-item_tags tags">
+          <ul>
+              ${result.tags.map(tag => ` <li class="${tag.toLowerCase()}">
+                <a onclick="selectTag('${tag}')" href="#">${tag}</a>
+             </li>`).join('')}
+          </ul>
+        </div>
       </div>
       <div class="right-info">
          <div>${result.version ? 'Version:' + result.version : ''}</div>
          <div>Updated: ${result.updated}</div>
          <div>Total downloads: ${result.downloads}</div>
       </div>
-   </div>
-   <div class="modules-item_tags tags">
-      <ul>
-          ${result.tags.map(tag => ` <li class="${tag.toLowerCase()}">
-            <a onclick="selectTag('${tag}')" href="#">${tag}</a>
-         </li>`).join('')}
-      </ul>
    </div>
 </article>`
     });

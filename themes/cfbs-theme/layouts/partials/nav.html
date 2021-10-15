@@ -6,7 +6,7 @@
         </div>
         <div class="search-wrapper">
             <form class="search" action="/modules/">
-                <input type="text" placeholder="Search modules" name="query" />
+                <input autocomplete="off" type="text" placeholder="Search modules" name="query" />
                 <button type="submit"><i class="bi bi-search"></i></button>
              </form>
         </div>
@@ -31,7 +31,7 @@
                             {{ end }}
                             </ul>
                             {{ else }}
-                            <a {{ with .id }} id="{{ . }}" {{ end }} {{ with .target }} target="{{ . }}" {{ end }} href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
+                            <a {{ with .id }} id="{{ . }}" {{ end }} {{ with .target }} target="{{ . }}" {{ end }}  {{ with .dataModal }}data-modal="{{ . }}"{{ end }} href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
                             {{ end }}
                         </li>
                         {{ end }}

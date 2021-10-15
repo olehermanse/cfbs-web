@@ -16,5 +16,5 @@
         {{ end }}
     </div>
     <div class="modules-item_description">{{ .Params.Description }}</div>
-    <div class="modules-item_version">{{ .Params.Version }}</div>
+    {{ if .Params.Version }}<div class="modules-item_version">{{ .Params.Version }}</div>{{ end }}
 </div>
