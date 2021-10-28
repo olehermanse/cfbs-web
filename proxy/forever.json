@@ -1,0 +1,9 @@
+{
+  "uid": "processStats",
+  "append": true,
+  "script": "processStats.js",
+  "sourceDir": "/usr/share/proxy",
+  "logFile": "/home/proxy/logs/forever/log.log",
+  "outFile": "/home/proxy/logs/forever/out.log",
+  "errFile": "/home/proxy/logs/forever/error.log"
+}

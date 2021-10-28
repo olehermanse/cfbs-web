@@ -1,5 +1,8 @@
 #!/bin/sh
 
+mkdir -p /home/proxy/logs/forever
+forever start /usr/share/proxy/forever.json
+
 nginx_conf=/etc/nginx/nginx.conf
 
 IS_HTTPS=${IS_HTTPS:-"false"}
