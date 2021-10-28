@@ -1,4 +1,4 @@
-# CFEngine Build System Website
+# CFEngine Build Website Repository
 
 The website lists available modules from the index and gives you easy commands to copy.
 
