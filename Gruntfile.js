@@ -76,14 +76,15 @@ module.exports = function (grunt) {
         const headers = {
             "Authorization": "Basic " + Buffer.from(process.env.GITHUB_USERNAME_TOKEN).toString("base64")
         };
-        const response = await got('https://raw.githubusercontent.com/cfengine/cfbs-index/master/index.json', {headers}).json();
+        const response = await got('https://raw.githubusercontent.com/cfengine/build-index/master/cfbs.json', {headers}).json();
 
         const limit = await got('https://api.github.com/rate_limit', {headers}).json();
         console.log(`Remainig limit: ${limit.resources.core.remaining}`)
 
-        const modules = response.modules;
+        const modules = response.index;
         let authors = grunt.file.readJSON('./static/js/authors.json');
         let authorsChanged = false;
+
 
         let i = 0;
         for (const index in modules) {
