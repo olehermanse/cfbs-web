@@ -11,7 +11,7 @@ disqusShortname = 'cfengine-build'
 [params.info]
 homeTitle = "CFEngine Build" # Title for home page
 
-[params.suggested]
+[params.featured]
 modules = ['promise-type-git.html', 'inventory-sudoers.html', 'autorun.html']
 
 [taxonomies]
