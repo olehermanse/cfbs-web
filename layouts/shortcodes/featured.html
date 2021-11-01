@@ -1,7 +1,6 @@
 
-{{ range $module :=  .Site.Params.Suggested.Modules }}
+{{ range $module :=  .Site.Params.Featured.Modules }}
   {{ with $.Site.GetPage (print  "modules/" $module) }}
       {{ partial "module" . }}
   {{ end }}
 {{ end }}
-
