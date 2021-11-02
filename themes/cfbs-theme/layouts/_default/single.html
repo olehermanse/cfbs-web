@@ -72,15 +72,15 @@
             <div class="version flex flex--align_center">
                 <div>Version</div>
                 {{ (index .Params.Versions 0) }}
-                <div class="dropdown-select">
-                    <span>1.1.0 <i class="bi bi-chevron-down"></i></span>
+                <div class="dropdown-select versions">
+                    <span>{{ .Params.Version }} <i class="bi bi-chevron-down"></i></span>
                     <div class="dropdown-select_options">
-                        {{ range $version, $released := .Params.Versions }}
-                        <div data-released="{{ $released }}">{{ $version }}</div>
+                        {{ range $version, $value := .Params.Versions }}
+                        <div data-latest="{{ $value.latest }}" data-version="{{ $version }}" data-module="{{ $.Title }}">{{ $version }}</div>
                         {{ end }}
                     </div>
                 </div>
-                <div>Releases on {{ .Params.Updated }}</div>
+                <div>Releases on {{ with (index .Params.Versions .Params.Version)  }} {{ .date }}  {{ end }}</div>
             </div>
             {{ end }}
             {{ if .Params.Tags }}
