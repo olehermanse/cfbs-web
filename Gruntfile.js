@@ -50,11 +50,12 @@ module.exports = function (grunt) {
                 return null
             }
             let pageIndex;
-            // First separate the Front Matter from the content and parse it
-            content = content.split("}     \n");
+            // parse JSON fronmatter from the content
+            const m = content.match(/^{([\s\S]*?)^}/m);
+
             let frontMatter;
             try {
-                frontMatter = JSON.parse(content[0].trim() + '}');
+                frontMatter = JSON.parse(m[0]);
             } catch (e) {
                 console.error(e.message);
             }
@@ -93,7 +94,6 @@ module.exports = function (grunt) {
         };
         const response = await got('https://raw.githubusercontent.com/cfengine/build-index/master/cfbs.json', {headers}).json();
         const versions = await got('https://raw.githubusercontent.com/cfengine/build-index/master/versions.json', {headers}).json();
-
         const limit = await got('https://api.github.com/rate_limit', {headers}).json();
         console.log(`Remaining limit: ${limit.resources.core.remaining}`)
 
@@ -164,12 +164,12 @@ module.exports = function (grunt) {
                         return reducer;
                     }, {});
 
-                    (await processVersions(module.version, moduleVersions, Object.assign({}, frontmatter))).forEach(item => {
-                        grunt.file.write(`./content/modules/${index}/${item.version}${extension}`, `${JSON.stringify(item.frontmatter, null, 2)}     \n${item.content}`);
+                    (await processVersions(module.version, moduleVersions, frontmatter)).forEach(item => {
+                        grunt.file.write(`./content/modules/${index}/${item.version}${extension}`, `${JSON.stringify(item.frontmatter, null, 2)}\n${item.content}`);
                     });
                 }
                 // frontmatters end
-                grunt.file.write(`./content/modules/${index}/_index${extension}`, `${JSON.stringify(frontmatter, null, 2)}     \n${content}`);
+                grunt.file.write(`./content/modules/${index}/_index${extension}`, `${JSON.stringify(frontmatter, null, 2)}\n${content}`);
 
                 grunt.log.ok(`${index} page created`);
             }
@@ -182,13 +182,18 @@ module.exports = function (grunt) {
 
     const processVersions = async function (current, versions, frontmatter) {
         let result = [];
-        frontmatter.hide = true;
         for (const version in versions) {
+            let copiedFM = Object.assign({}, frontmatter);
             if (current === version) continue;
-            frontmatter.id += '@' + version;
-            frontmatter.version = version;
-            let {content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256);
-            result.push({content, extension,frontmatter, version});
+            copiedFM.hide = true;
+            copiedFM.id += `@${version}`
+            copiedFM.version = version;
+            let content = 'Readme not found', extension = '.html';
+            if (versions[version].readme_url != null) {
+                ({content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256));
+            }
+
+            result.push({content, extension, frontmatter: copiedFM, version});
         }
         return result;
     }
