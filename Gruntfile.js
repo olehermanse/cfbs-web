@@ -165,7 +165,7 @@ module.exports = function (grunt) {
                         return reducer;
                     }, {});
 
-                    (await processVersions(module.version, moduleVersions, Object.assign({}, frontmatter))).forEach(item => {
+                    (await processVersions(module.version, moduleVersions, frontmatter)).forEach(item => {
                         grunt.file.write(`./content/modules/${index}/${item.version}${extension}`, `${JSON.stringify(item.frontmatter, null, 2)}\n${item.content}`);
                     });
                 }
@@ -183,13 +183,14 @@ module.exports = function (grunt) {
 
     const processVersions = async function (current, versions, frontmatter) {
         let result = [];
-        frontmatter.hide = true;
         for (const version in versions) {
+            let copiedFM = Object.assign({}, frontmatter);
             if (current === version) continue;
-            frontmatter.id += '@' + version;
-            frontmatter.version = version;
+            copiedFM.hide = true;
+            copiedFM.id += `@${version}`
+            copiedFM.version = version;
             let {content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256);
-            result.push({content, extension,frontmatter, version});
+            result.push({content, extension, frontmatter: copiedFM, version});
         }
         return result;
     }
