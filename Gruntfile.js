@@ -1,3 +1,6 @@
+const got = require("got");
+const {extname} = require("path");
+const {createHash} = require("crypto");
 const CONTENT_PATH_PREFIX = "./content/modules";
 module.exports = function (grunt) {
     require('jit-grunt')(grunt);
@@ -32,8 +35,9 @@ module.exports = function (grunt) {
             let pagesIndex = [];
             grunt.file.recurse(CONTENT_PATH_PREFIX, function (abspath, rootdir, subdir, filename) {
                 grunt.verbose.writeln("Parse file:", abspath);
-                if (filename.includes('.html') && filename != '_index.html') {
-                    pagesIndex.push(processFile(abspath, filename));
+                const index = processFile(abspath, filename);
+                if (index !== null) {
+                    pagesIndex.push(index);
                 }
                 return;
             });
@@ -42,6 +46,9 @@ module.exports = function (grunt) {
 
         let processFile = function (abspath, filename) {
             let content = grunt.file.read(abspath);
+            if (!content.includes('commit')) {
+                return null
+            }
             let pageIndex;
             // First separate the Front Matter from the content and parse it
             content = content.split("}     \n");
@@ -52,7 +59,13 @@ module.exports = function (grunt) {
                 console.error(e.message);
             }
 
-            let href = abspath.replace(/^(\.\/content\/modules)/,"").replace(/(\.html$)/, "").replace('content/', '/');
+            // exclude hidden pages
+            if (frontMatter.hide == true) {
+                return null;
+            }
+
+            const match = abspath.match(/^content(\/modules\/.*\/)/);
+            let href = match[1];
 
             // Build Lunr index for this page
             pageIndex = {
@@ -67,6 +80,8 @@ module.exports = function (grunt) {
     });
 
     const got = require('got')
+    const {extname} = require('path')
+    const {createHash} = require('crypto')
     grunt.registerTask("modules-update", async function () {
         const done = this.async();
         if (!process.env.hasOwnProperty('GITHUB_USERNAME_TOKEN')) {
@@ -77,9 +92,10 @@ module.exports = function (grunt) {
             "Authorization": "Basic " + Buffer.from(process.env.GITHUB_USERNAME_TOKEN).toString("base64")
         };
         const response = await got('https://raw.githubusercontent.com/cfengine/build-index/master/cfbs.json', {headers}).json();
+        const versions = await got('https://raw.githubusercontent.com/cfengine/build-index/master/versions.json', {headers}).json();
 
         const limit = await got('https://api.github.com/rate_limit', {headers}).json();
-        console.log(`Remainig limit: ${limit.resources.core.remaining}`)
+        console.log(`Remaining limit: ${limit.resources.core.remaining}`)
 
         const modules = response.index;
         let authors = grunt.file.readJSON('./static/js/authors.json');
@@ -94,9 +110,7 @@ module.exports = function (grunt) {
             if (!module.hasOwnProperty('alias')) {
 
                 const authorRepo = module.repo.replace(/^(https\:\/\/github\.com\/)/, "").toString();
-
                 const repoInfo = await got('https://api.github.com/repos/' + authorRepo, {headers}).json();
-
                 const revision = module.commit || 'master';
 
                 // author
@@ -110,23 +124,13 @@ module.exports = function (grunt) {
                 // author end
 
                 // content
-                let content = '';
-                let extension = '.html';
+                let content, extension = '.html', version = {};
 
-                try {
-                    content = await got(`https://api.github.com/repos/${authorRepo}/readme/${module.subdirectory || ''}?ref=${revision}`, {headers: {...headers, ...{"Accept": 'application/vnd.github.v3.html'}}}).text();
-
-                    // replace src and links from relative to absolute
-                    let srcReg = /src="(?!(http|file:).*)/gi
-                    let hrefReg = reg = /href="(?!(http|file:).*)/gi
-                    content = content
-                        .replace(srcReg, `src="https://raw.githubusercontent.com/${authorRepo}/${revision}/`)
-                        .replace(hrefReg, `href="https://github.com/${authorRepo}/blob/${revision}/`);
-                } catch (e) {
+                if (versions[index] && (version = versions[index][module.version]) && version.readme_url != null) {
+                    ({content, extension} = await getContent(version.readme_url, version.readme_sha256));
+                } else  {
                     content = 'Readme not found'
                 }
-                // content end
-
 
                 // frontmatters
                 let frontmatter = {
@@ -140,11 +144,7 @@ module.exports = function (grunt) {
                         "url": module.by
                     },
                     "versions": {},
-                    "updated": (new Date(repoInfo.updated_at)).toLocaleDateString('en-us', {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric"
-                    }),
+                    "updated": getFormattedDate(new Date(repoInfo.updated_at)),
                     "downloads": Math.floor(Math.random() * 10000),
                     "repo": module.repo,
                     "documentation": module.documentation || null,
@@ -152,16 +152,24 @@ module.exports = function (grunt) {
                     "subdirectory": module.subdirectory,
                     "commit": module.commit,
                     "dependencies": module.dependencies || [],
-                    "tags": module.tags || []
+                    "tags": module.tags || [],
+                    "layout": "single"
                 }
 
                 if (module.hasOwnProperty('version')) {
                     frontmatter.version = module.version;
-                    // @todo versions should be fetched from backend/db/s3, not implemented yet
-                    frontmatter.versions[module.version] = frontmatter.updated;
+                    const moduleVersions = versions[index];
+                    frontmatter.versions = Object.keys(moduleVersions).reduce((reducer, version) => {
+                        reducer[version] = {date: getFormattedDate(new Date(moduleVersions[version].timestamp)), latest: version == module.version};
+                        return reducer;
+                    }, {});
+
+                    (await processVersions(module.version, moduleVersions, Object.assign({}, frontmatter))).forEach(item => {
+                        grunt.file.write(`./content/modules/${index}/${item.version}${extension}`, `${JSON.stringify(item.frontmatter, null, 2)}     \n${item.content}`);
+                    });
                 }
                 // frontmatters end
-                grunt.file.write(`./content/modules/${index}${extension}`, `${JSON.stringify(frontmatter, null, 2)}     \n${content}`);
+                grunt.file.write(`./content/modules/${index}/_index${extension}`, `${JSON.stringify(frontmatter, null, 2)}     \n${content}`);
 
                 grunt.log.ok(`${index} page created`);
             }
@@ -171,6 +179,35 @@ module.exports = function (grunt) {
         }
         done();
     });
+
+    const processVersions = async function (current, versions, frontmatter) {
+        let result = [];
+        frontmatter.hide = true;
+        for (const version in versions) {
+            if (current === version) continue;
+            frontmatter.id += '@' + version;
+            frontmatter.version = version;
+            let {content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256);
+            result.push({content, extension,frontmatter, version});
+        }
+        return result;
+    }
+
+    const getContent = async function (readmeUrl, readmeSHA256) {
+       let  content = await got(`https://cfbs.s3.amazonaws.com/${readmeUrl}`).text();
+       const extension = extname(readmeUrl);
+
+        const checksum = createHash('sha256').update(content).digest('hex');
+
+        if (checksum !== readmeSHA256) {
+            console.error(`${readmeUrl} checksum is wrong`);
+            process.exit(1);
+        }
+
+        return {content, extension}
+    }
+
+    const getFormattedDate = date => date.toLocaleDateString('en-us', {year: "numeric", month: "short", day: "numeric"});
 
     grunt.registerTask('build', ['modules-update', 'lunr-index', 'uglify', 'less']);
 };

@@ -1,3 +1,3 @@
-{{ range first (.Get "count") (sort $.Site.RegularPages "Params.downloads" "desc" (where $.Site.RegularPages "Section" "modules" )) }}
+{{ range first (.Get "count") (where (sort $.Site.Pages "Params.downloads" "desc" (where $.Site.Pages "Section" "modules" )) "Params.hide" "=" nil ) }}
     {{ partial "module" . }}
 {{ end }}
