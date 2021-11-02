@@ -94,7 +94,6 @@ module.exports = function (grunt) {
         };
         const response = await got('https://raw.githubusercontent.com/cfengine/build-index/master/cfbs.json', {headers}).json();
         const versions = await got('https://raw.githubusercontent.com/cfengine/build-index/master/versions.json', {headers}).json();
-
         const limit = await got('https://api.github.com/rate_limit', {headers}).json();
         console.log(`Remaining limit: ${limit.resources.core.remaining}`)
 
@@ -189,7 +188,11 @@ module.exports = function (grunt) {
             copiedFM.hide = true;
             copiedFM.id += `@${version}`
             copiedFM.version = version;
-            let {content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256);
+            let content = 'Readme not found', extension = '.html';
+            if (versions[version].readme_url != null) {
+                ({content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256));
+            }
+
             result.push({content, extension, frontmatter: copiedFM, version});
         }
         return result;
