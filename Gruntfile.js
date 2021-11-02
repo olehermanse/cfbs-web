@@ -50,11 +50,12 @@ module.exports = function (grunt) {
                 return null
             }
             let pageIndex;
-            // First separate the Front Matter from the content and parse it
-            content = content.split("}     \n");
+            // parse JSON fronmatter from the content
+            const m = content.match(/^{([\s\S]*?)^}/m);
+
             let frontMatter;
             try {
-                frontMatter = JSON.parse(content[0].trim() + '}');
+                frontMatter = JSON.parse(m[0]);
             } catch (e) {
                 console.error(e.message);
             }
@@ -165,11 +166,11 @@ module.exports = function (grunt) {
                     }, {});
 
                     (await processVersions(module.version, moduleVersions, Object.assign({}, frontmatter))).forEach(item => {
-                        grunt.file.write(`./content/modules/${index}/${item.version}${extension}`, `${JSON.stringify(item.frontmatter, null, 2)}     \n${item.content}`);
+                        grunt.file.write(`./content/modules/${index}/${item.version}${extension}`, `${JSON.stringify(item.frontmatter, null, 2)}\n${item.content}`);
                     });
                 }
                 // frontmatters end
-                grunt.file.write(`./content/modules/${index}/_index${extension}`, `${JSON.stringify(frontmatter, null, 2)}     \n${content}`);
+                grunt.file.write(`./content/modules/${index}/_index${extension}`, `${JSON.stringify(frontmatter, null, 2)}\n${content}`);
 
                 grunt.log.ok(`${index} page created`);
             }
