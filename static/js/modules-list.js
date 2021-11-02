@@ -196,10 +196,6 @@ function renderModules(results) {
     resultsWrapper.innerHTML = modulesHTML;
 }
 
-document.querySelectorAll('.dropdown-select span').forEach(item => item.onclick = () => {
-    item.closest('.dropdown-select').classList.add('opened')
-});
-
 const paginate = (items, perPage, page) => items.slice((page - 1) * perPage, page * perPage);
 const sorting = (items) => {
     switch (sort) {
