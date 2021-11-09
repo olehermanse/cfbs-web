@@ -18,6 +18,8 @@ fetch('/js/lunr/PagesIndex.json')
     .then(index => {
         pagesIndex = index;
         lunrIndex = lunr(function () {
+            this.pipeline.remove(lunr.stemmer)
+            this.searchPipeline.remove(lunr.stemmer)
             this.field("title", {boost: 50});
             this.field("description", {boost: 25});
             this.field("tags", {boost: 5});
