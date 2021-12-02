@@ -95,6 +95,7 @@ module.exports = function (grunt) {
         const response = await got('https://raw.githubusercontent.com/cfengine/build-index/master/cfbs.json', {headers}).json();
         const versions = await got('https://raw.githubusercontent.com/cfengine/build-index/master/versions.json', {headers}).json();
         const limit = await got('https://api.github.com/rate_limit', {headers}).json();
+        const downloadStat = await got('https://archive.build.cfengine.com/stats').json();
         console.log(`Remaining limit: ${limit.resources.core.remaining}`)
 
         const modules = response.index;
@@ -145,7 +146,7 @@ module.exports = function (grunt) {
                     },
                     "versions": {},
                     "updated": getFormattedDate(new Date(repoInfo.updated_at)),
-                    "downloads": Math.floor(Math.random() * 10000),
+                    "downloads": downloadStat[index] ?? 0,
                     "repo": module.repo,
                     "documentation": module.documentation || null,
                     "website": module.website || null,
