@@ -14,15 +14,15 @@
 
 <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
 <meta prefix="og: http://ogp.me/ns#" property="og:title" content="{{ if isset .Params "preview_title" }}{{ index .Params "preview_title" }}{{ else }}{{ .Title }}{{ end }}" />
-<meta prefix="og: http://ogp.me/ns#" property="og:description" content="{{ if isset .Params "preview_description" }}{{ index .Params "preview_description" }}{{ end }}" />
-<meta prefix="og: http://ogp.me/ns#" property="og:image" content="{{ if isset .Params "preview_image_url" }}{{ index .Params "preview_image_url" }}{{ else }}https://cpm.directory/images/logo_wide_opengraph.png{{ end }}" />
-<meta prefix="og: http://ogp.me/ns#" property="og:url" content="cfengine.com" />
+<meta prefix="og: http://ogp.me/ns#" property="og:description" content="{{ if isset .Params "preview_description" }}{{ index .Params "preview_description" }}{{ else }}{{ .Params.Description }}{{ end }}" />
+<meta prefix="og: http://ogp.me/ns#" property="og:image" content="{{ if isset .Params "preview_image_url" }}{{ index .Params "preview_image_url" }}{{ else }}https://build.cfengine.com/module.png{{ end }}" />
+<meta prefix="og: http://ogp.me/ns#" property="og:url" content="build.cfengine.com" />
 
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="cfengine.com" />
+<meta name="twitter:site" content="build.cfengine.com" />
 <meta name="twitter:title" content="{{ if isset .Params "preview_title" }}{{ index .Params "preview_title" }}{{ else }}{{ .Title }}{{ end }}" />
-<meta name="twitter:description" content="{{ if isset .Params "preview_description" }}{{ index .Params "preview_description" }}{{ end }}" />
-<meta name="twitter:image" content="{{ if isset .Params "preview_image_url" }}{{ index .Params "preview_image_url" }}{{ else }}https://cpm.directory/images/agent_white_background.png{{ end }}" />
+<meta name="twitter:description" content="{{ if isset .Params "preview_description" }}{{ index .Params "preview_description" }}{{ else }}{{ .Params.Description }}{{ end }}" />
+<meta name="twitter:image" content="{{ if isset .Params "preview_image_url" }}{{ index .Params "preview_image_url" }}{{ else }}https://build.cfengine.com/module.png{{ end }}" />
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TW89K2P8L4"></script>
