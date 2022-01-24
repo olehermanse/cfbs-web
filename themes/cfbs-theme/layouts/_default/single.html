@@ -80,7 +80,7 @@
                         {{ end }}
                     </div>
                 </div>
-                <div>Releases on {{ with (index .Params.Versions .Params.Version)  }} {{ .date }}  {{ end }}</div>
+                <div>Released on {{ with (index .Params.Versions .Params.Version)  }} {{ .date }}  {{ end }}</div>
             </div>
             {{ end }}
             {{ if .Params.Tags }}
