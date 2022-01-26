@@ -115,7 +115,7 @@ module.exports = function (grunt) {
                 const revision = module.commit || 'master';
 
                 // author
-                const owner = module.by.replace(/^(https\:\/\/github\.com\/)/, "").toString();
+                const owner = module.by.replace(/^(https\:\/\/github\.com\/)/, "").replace(/\/$/, "").toString();
 
                 if (!authors.hasOwnProperty(owner)) { // if no author -> write
                     const authorResponse = await got('https://api.github.com/users/' + owner, {headers}).json();
