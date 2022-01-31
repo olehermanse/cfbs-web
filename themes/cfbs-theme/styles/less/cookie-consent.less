@@ -1,0 +1,33 @@
+.cookie-consent {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  padding: 2rem;
+  z-index: 99;
+  background: @lightGray;
+  border: 1px solid @borderLightGray;
+  border-radius: 1rem;
+  max-width: 35rem;
+  .shadowed();
+  &-text {
+    font-size: 1.6rem;
+    color: @textColorDarkBlue;
+    margin-bottom: 3rem;
+    a {
+      color: @textColorDarkBlue;
+    }
+  }
+  &-buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .btn {
+    min-width: 10rem;
+    border: 1px solid @textColorDarkBlue;
+    text-align: center;
+    margin-right: 2.4rem;
+    &:hover {
+      padding: 0.8rem 1.2rem;
+    }
+  }
+}

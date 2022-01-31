@@ -24,13 +24,23 @@
 <meta name="twitter:description" content="{{ if isset .Params "preview_description" }}{{ index .Params "preview_description" }}{{ else }}{{ .Params.Description }}{{ end }}" />
 <meta name="twitter:image" content="{{ if isset .Params "preview_image_url" }}{{ index .Params "preview_image_url" }}{{ else }}https://build.cfengine.com/module.png{{ end }}" />
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TW89K2P8L4"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TW89K2P8L4');
+    let gaInitialized = false;
+    document.addEventListener('cookieconsent_allowed', () => {
+        if (gaInitialized === true) return;
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-TW89K2P8L4';
+        document.head.appendChild(script);
+        script.addEventListener('load', function () {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-TW89K2P8L4');
+            gaInitialized = true;
+        });
+    });
 </script>
 </head>
 <body>
