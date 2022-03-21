@@ -1,13 +1,26 @@
 let lunrIndex, pagesIndex, allModules, modules, tags, query, searchParts = {tags: [], query: ""},
-    pagination = {perPage: 10, page: 1, total: 0, maxPage: 0}, sort;
+    pagination = {perPage: 10, page: 1, total: 0, maxPage: 0};
+
+const sortOptions = {
+    alphabetic: 'alphabetically',
+    relevance: 'relevance',
+    mostDownloads: 'most-downloads',
+    mostRecent: 'most-recent'
+};
+
+let sort = sortOptions.alphabetic;
+
+
+// if sorting is selected from the dropdown then do not change it automatically
+const changeDefaultSorting = newSortOption => (getSearchParam('sort') == null) && (sort = newSortOption)
 
 const resultsWrapper = document.querySelector('div.modules-list');
 const searchfor = document.getElementById('searchfor');
 document.addEventListener('QUERY_CHANGED', () => {
-    if (query) {
+    if (query & query.length > 0) {
         searchfor.style.display = 'block';
         searchfor.querySelector('b').innerText = query;
-        sort = 'relevance';
+        changeDefaultSorting(sortOptions.relevance);
     } else {
         searchfor.style.display = 'none';
     }
@@ -80,7 +93,7 @@ document.querySelector('input[name="query"]').onkeyup = (e) => {
     const url = new URL(window.location);
     url.searchParams.set('query', e.target.value);
     window.history.pushState({}, '', url);
-    sort = 'relevance';
+    changeDefaultSorting((query.length > 0 ? sortOptions.relevance : sortOptions.alphabetic));
     document.dispatchEvent(new Event('RENDER'));
     document.dispatchEvent(new Event('QUERY_CHANGED'));
 }
@@ -104,7 +117,7 @@ document.addEventListener("modules_loaded", () => {
         document.dispatchEvent(new Event('RENDER'))
     }
 
-    if (getSearchParam('sort')) {
+    if (getSearchParam('sort') && Object.values(sortOptions).includes(getSearchParam('sort'))) {
         sort = getSearchParam('sort');
         document.dispatchEvent(new Event('RENDER'))
     }
@@ -201,13 +214,13 @@ function renderModules(results) {
 const paginate = (items, perPage, page) => items.slice((page - 1) * perPage, page * perPage);
 const sorting = (items) => {
     switch (sort) {
-        case 'alphabetically':
+        case sortOptions.alphabetic:
             items = items.sort((a, b) => a.title.localeCompare(b.title))
             break;
-        case 'most-download':
+        case sortOptions.mostDownloads:
             items = items.sort((a, b) => b.downloads - a.downloads)
             break;
-        case 'most-recent':
+        case sortOptions.mostRecent:
             items = items.sort((a, b) => (new Date(b.updated)).getTime() - (new Date(a.updated)).getTime())
             break;
         default:
@@ -256,7 +269,6 @@ first_page.addEventListener('click', () => {
 
 document.addEventListener('paginated', () => {
     const searchParams = new URLSearchParams(location.search);
-    searchParams.delete('tag')
     searchParams.set('page', pagination.page)
     searchParams.set('perPage', pagination.perPage)
     location.search = searchParams.toString();
@@ -288,4 +300,6 @@ const initPaginationHtml = () => {
     if (sort) {
         sortBy.querySelector('span > div').innerText = sort.capitalize().replace('-', ' ');
     }
+
+    perPageDropdown.querySelector('span > div').innerHTML = pagination.perPage;
 }
