@@ -4,8 +4,8 @@ let lunrIndex, pagesIndex, allModules, modules, tags, query, searchParts = {tags
 const sortOptions = {
     alphabetic: 'alphabetically',
     relevance: 'relevance',
-    mostDownload: 'most-download',
-    mostRecently: 'most-recently'
+    mostDownloads: 'most-downloads',
+    mostRecent: 'most-recent'
 };
 
 let sort = sortOptions.alphabetic;
@@ -117,7 +117,7 @@ document.addEventListener("modules_loaded", () => {
         document.dispatchEvent(new Event('RENDER'))
     }
 
-    if (getSearchParam('sort')) {
+    if (getSearchParam('sort') && Object.values(sortOptions).includes(getSearchParam('sort'))) {
         sort = getSearchParam('sort');
         document.dispatchEvent(new Event('RENDER'))
     }
@@ -217,10 +217,10 @@ const sorting = (items) => {
         case sortOptions.alphabetic:
             items = items.sort((a, b) => a.title.localeCompare(b.title))
             break;
-        case sortOptions.mostDownload:
+        case sortOptions.mostDownloads:
             items = items.sort((a, b) => b.downloads - a.downloads)
             break;
-        case sortOptions.mostRecently:
+        case sortOptions.mostRecent:
             items = items.sort((a, b) => (new Date(b.updated)).getTime() - (new Date(a.updated)).getTime())
             break;
         default:
