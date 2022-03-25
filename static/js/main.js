@@ -22,7 +22,7 @@ window.onclick = e => {
 }
 
 document.querySelectorAll('.dropdown-select span').forEach(item => item.onclick = () => {
-    item.closest('.dropdown-select').classList.add('opened')
+    item.closest('.dropdown-select').classList.toggle('opened')
 });
 
 const versionsDropdown = document.querySelector('.dropdown-select.versions');
