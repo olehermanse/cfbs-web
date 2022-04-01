@@ -227,7 +227,7 @@ module.exports = function (grunt) {
             return;
         }
 
-        const getDescriptionHtml = moduleId => {
+        const getReadmeHtml = moduleId => {
             const html = grunt.file.read(`./public/modules/${moduleId}/index.html`);
             const dom = new jsdom.JSDOM(html);
             return dom.window.document.querySelector("#tab1").innerHTML;
@@ -235,7 +235,7 @@ module.exports = function (grunt) {
 
         let modules = JSON.parse(grunt.file.read(PAGES_INDEX_PATH));
         modules.forEach((module, index) => {
-            modules[index]['descriptionHtml'] = getDescriptionHtml(module.id);
+            modules[index]['readme'] = getReadmeHtml(module.id);
         });
 
         grunt.file.write(MODULES_JSON_PATH, JSON.stringify(modules));
