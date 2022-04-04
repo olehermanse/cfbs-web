@@ -8,6 +8,7 @@ RUN npm i
 RUN npm i -g grunt-cli
 RUN grunt build
 RUN ./hugo -v
+RUN grunt create-modules-json
 RUN find public -type f -regex '^.*\.\(svg\|css\|html\|xml\)$' -size +1k -exec gzip -k '{}' \;
 
 FROM nginx:stable-alpine

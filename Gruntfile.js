@@ -1,7 +1,10 @@
 const got = require("got");
 const {extname} = require("path");
 const {createHash} = require("crypto");
+const jsdom = require("jsdom");
 const CONTENT_PATH_PREFIX = "./content/modules";
+const PAGES_INDEX_PATH = "./static/js/lunr/PagesIndex.json";
+const MODULES_JSON_PATH = "./public/js/modules.json";
 module.exports = function (grunt) {
     require('jit-grunt')(grunt);
     grunt.initConfig({
@@ -76,7 +79,7 @@ module.exports = function (grunt) {
 
             return pageIndex;
         };
-        grunt.file.write("./static/js/lunr/PagesIndex.json", JSON.stringify(indexPages()));
+        grunt.file.write(PAGES_INDEX_PATH, JSON.stringify(indexPages()));
         grunt.log.ok("Index built");
     });
 
@@ -216,4 +219,26 @@ module.exports = function (grunt) {
     const getFormattedDate = date => date.toLocaleDateString('en-us', {year: "numeric", month: "short", day: "numeric"});
 
     grunt.registerTask('build', ['modules-update', 'lunr-index', 'uglify', 'less']);
+
+    grunt.registerTask("create-modules-json", function () {
+
+        if (!grunt.file.exists(PAGES_INDEX_PATH)) {
+            grunt.log.error(`modules.json cannot be created. Page index file '${PAGES_INDEX_PATH}' is missing, please run 'build' task to before.`)
+            return;
+        }
+
+        const getReadmeHtml = moduleId => {
+            const html = grunt.file.read(`./public/modules/${moduleId}/index.html`);
+            const dom = new jsdom.JSDOM(html);
+            return dom.window.document.querySelector("#tab1").innerHTML;
+        }
+
+        let modules = JSON.parse(grunt.file.read(PAGES_INDEX_PATH));
+        modules.forEach((module, index) => {
+            modules[index]['readme'] = getReadmeHtml(module.id);
+        });
+
+        grunt.file.write(MODULES_JSON_PATH, JSON.stringify(modules));
+        grunt.log.ok("Modules.json built");
+    });
 };
