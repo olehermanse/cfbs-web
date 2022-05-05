@@ -12,7 +12,7 @@
             </div>
         </div>
         {{ if in .Params.Tags "supported" }}
-        <div class="badge badge-success">supported</div>
+        <a href="/modules/?tag=supported" class="badge badge-success">supported</a>
         {{ end }}
     </div>
     <div class="modules-item_description">{{ .Params.Description }}</div>
