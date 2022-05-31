@@ -5,6 +5,18 @@ const jsdom = require("jsdom");
 const CONTENT_PATH_PREFIX = "./content/modules";
 const PAGES_INDEX_PATH = "./static/js/lunr/PagesIndex.json";
 const MODULES_JSON_PATH = "./public/js/modules.json";
+
+const parseFrontMatter = content => {
+    const m = content.match(/^{([\s\S]*?)^}/m);
+
+    let frontMatter;
+    try {
+        frontMatter = JSON.parse(m[0]);
+    } catch (e) {
+        console.error(e.message);
+    }
+    return frontMatter;
+}
 module.exports = function (grunt) {
     require('jit-grunt')(grunt);
     grunt.initConfig({
@@ -53,15 +65,8 @@ module.exports = function (grunt) {
                 return null
             }
             let pageIndex;
-            // parse JSON fronmatter from the content
-            const m = content.match(/^{([\s\S]*?)^}/m);
 
-            let frontMatter;
-            try {
-                frontMatter = JSON.parse(m[0]);
-            } catch (e) {
-                console.error(e.message);
-            }
+            let frontMatter = parseFrontMatter(content);
 
             // exclude hidden pages
             if (frontMatter.hide == true) {
@@ -227,18 +232,34 @@ module.exports = function (grunt) {
             return;
         }
 
-        const getReadmeHtml = moduleId => {
-            const html = grunt.file.read(`./public/modules/${moduleId}/index.html`);
+        const getReadmeHtml = (moduleId, fileDirectory) => {
+            const html = grunt.file.read(`./public/modules/${moduleId}/${fileDirectory}/index.html`);
             const dom = new jsdom.JSDOM(html);
             return dom.window.document.querySelector("#tab1").innerHTML;
         }
 
-        let modules = JSON.parse(grunt.file.read(PAGES_INDEX_PATH));
-        modules.forEach((module, index) => {
-            modules[index]['readme'] = getReadmeHtml(module.id);
+        let versionedModules = {};
+        grunt.file.recurse(CONTENT_PATH_PREFIX, function (abspath) {
+            let content = grunt.file.read(abspath);
+            if (!content.includes('commit')) {
+                return;
+            }
+
+            let module = parseFrontMatter(content);
+            const index = module.title;
+
+            if (!versionedModules.hasOwnProperty(index)) {
+                versionedModules[index] = {};
+            }
+
+            versionedModules[index][module.version] = module;
+
+            // latest version does not have directory and locates in module's root
+            const fileDirectory = module.versions[module.version].latest ? '' : module.version;
+            versionedModules[index][module.version]['readme'] = getReadmeHtml(index, fileDirectory);
         });
 
-        grunt.file.write(MODULES_JSON_PATH, JSON.stringify(modules));
+        grunt.file.write(MODULES_JSON_PATH, JSON.stringify(versionedModules));
         grunt.log.ok("Modules.json built");
     });
 };
