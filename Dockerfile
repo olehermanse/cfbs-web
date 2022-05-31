@@ -1,7 +1,8 @@
 FROM node:alpine AS build
 ARG GITHUB_USERNAME_TOKEN
 WORKDIR /cfbs-web
-ADD https://github.com/gohugoio/hugo/releases/download/v0.88.1/hugo_0.88.1_Linux-64bit.tar.gz hugo.tar.gz
+ADD https://github.com/gohugoio/hugo/releases/download/v0.100.0/hugo_0.100.0_Linux-64bit.tar.gz hugo.tar.gz
+RUN echo "1c0b2979b9ec05ed0dfee4325b205cfb7fb516cf606d7e09f274e0d291cfe7cc  hugo.tar.gz" | sha256sum -c
 RUN tar -zxvf hugo.tar.gz
 COPY ./ /cfbs-web
 RUN npm i
