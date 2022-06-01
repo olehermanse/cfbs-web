@@ -197,6 +197,8 @@ module.exports = function (grunt) {
             copiedFM.hide = true;
             copiedFM.id += `@${version}`
             copiedFM.version = version;
+            copiedFM.commit = versions[version].commit;
+            copiedFM.subdirectory = versions[version].subdirectory;
             let content = 'Readme not found', extension = '.html';
             if (versions[version].readme_url != null) {
                 ({content, extension} = await getContent(versions[version].readme_url, versions[version].readme_sha256));
