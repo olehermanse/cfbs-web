@@ -53,7 +53,7 @@ document.addEventListener('modules_loaded', function (e) {
     document.dispatchEvent(new Event('TAGS_LOADED'))
 })
 
-const getSearchParam = name => (new URLSearchParams(location.search)).get(name);
+const getSearchParam = name => sanitizeString((new URLSearchParams(location.search)).get(name));
 
 const sortBy = document.querySelector('.sort-by');
 const orderChanged = (e) => {
@@ -67,13 +67,13 @@ document.querySelectorAll('.sort-by .dropdown-select_options div').forEach(item 
 document.addEventListener('TAGS_LOADED', function (e) {
     const selectedTags = getTags();
     let tagsHtml = '';
-    tags.forEach(tag => tagsHtml += tag == 'Supported' ? '' : `<li><a onclick="selectTag('${tag}')" href="#">${tag}</a></li>`);
+    tags.forEach(tag => tagsHtml += tag == 'Supported' ? '' : `<li><a onclick="selectTag('${sanitizeString(tag)}')" href="#">${sanitizeString(tag)}</a></li>`);
     document.querySelector('ul.tags').innerHTML = tagsHtml;
     if (selectedTags.length) {
         document.querySelector('.modules-applied-tags').style.display = 'block';
         searchParts.tags.push(...selectedTags.map(item => '+tags:' + item.replaceAll(' ', '\\ ').replaceAll('-', '\\-')));
         document.dispatchEvent(new Event('RENDER'))
-        document.querySelector('.modules-applied-tags ul').innerHTML = selectedTags.map(item => `<li>${item} <a onclick="removeTag('${item}')" href="#"><i class="bi bi-x"></i></a></li>`).join('');
+        document.querySelector('.modules-applied-tags ul').innerHTML = selectedTags.map(item => `<li>${sanitizeString(item)} <a onclick="removeTag('${sanitizeString(item)}')" href="#"><i class="bi bi-x"></i></a></li>`).join('');
     } else {
         document.querySelector('.modules-applied-tags').style.display = 'none';
     }
