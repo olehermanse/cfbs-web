@@ -125,3 +125,7 @@ document.querySelectorAll(".copy").forEach(el => el.addEventListener("click", co
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
+
+// remove all chars except alphanumeric and . , _ -
+const sanitizeString = str => str !== null ? str.replace(/[^a-z0-9\.,_-]/gim,"") : null;
+
