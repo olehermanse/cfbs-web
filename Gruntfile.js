@@ -39,7 +39,7 @@ module.exports = function (grunt) {
             build: {
                 files: {
                     './static/js/bundles/main.js': ['./static/js/main.js'],
-                    './static/js/bundles/modules-page.js': ['./node_modules/lunr/lunr.js', './static/js/modules-list.js'],
+                    './static/js/bundles/modules-page.js': ['./node_modules/flexsearch/dist/flexsearch.bundle.js', './static/js/modules-list.js'],
                 }
             }
         },
@@ -47,12 +47,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask("lunr-index", function () {
         let indexPages = function () {
-            let pagesIndex = [];
+            let pagesIndex = {};
             grunt.file.recurse(CONTENT_PATH_PREFIX, function (abspath, rootdir, subdir, filename) {
                 grunt.verbose.writeln("Parse file:", abspath);
                 const index = processFile(abspath, filename);
                 if (index !== null) {
-                    pagesIndex.push(index);
+                    pagesIndex[index.id] = index;
                 }
                 return;
             });
