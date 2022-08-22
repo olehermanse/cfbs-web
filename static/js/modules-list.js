@@ -1,4 +1,4 @@
-let lunrIndex, pagesIndex, allModules, modules, tags, query, searchParts = {tags: [], query: ""},
+let pagesIndex, allModules, modules, tags, query, searchParts = {tags: [], query: ""},
     pagination = {perPage: 10, page: 1, total: 0, maxPage: 0};
 
 const sortOptions = {
@@ -26,19 +26,31 @@ document.addEventListener('QUERY_CHANGED', () => {
     }
 })
 
+let flexSearchIndex = new FlexSearch.Document({
+    document: {
+        id: 'id',
+        index: ['title', 'description']
+    },
+    charset: "latin",
+    tokenize: "full",
+    matcher: "simple",
+    cache: true
+});
+
 fetch('/js/lunr/PagesIndex.json')
     .then(response => response.json())
     .then(index => {
         pagesIndex = index;
-        lunrIndex = lunr(function () {
-            this.pipeline.remove(lunr.stemmer)
-            this.searchPipeline.remove(lunr.stemmer)
-            this.field("title", {boost: 50});
-            this.field("description", {boost: 25});
-            this.field("tags", {boost: 5});
-            this.ref("href");
-            index.map(page => this.add(page));
-        });
+
+        for (const id in index) {
+            const page = index[id];
+            flexSearchIndex.add({
+                id: page.id,
+                description: page.description,
+                title: page.title
+            })
+        }
+
         allModules = modules = modulesList('');
         document.dispatchEvent(new Event('RENDER'))
         document.dispatchEvent(new Event('modules_loaded'))
@@ -71,7 +83,7 @@ document.addEventListener('TAGS_LOADED', function (e) {
     document.querySelector('ul.tags').innerHTML = tagsHtml;
     if (selectedTags.length) {
         document.querySelector('.modules-applied-tags').style.display = 'block';
-        searchParts.tags.push(...selectedTags.map(item => '+tags:' + item.replaceAll(' ', '\\ ').replaceAll('-', '\\-')));
+        searchParts.tags.push(...selectedTags);
         document.dispatchEvent(new Event('RENDER'))
         document.querySelector('.modules-applied-tags ul').innerHTML = selectedTags.map(item => `<li>${sanitizeString(item)} <a onclick="removeTag('${sanitizeString(item)}')" href="#"><i class="bi bi-x"></i></a></li>`).join('');
     } else {
@@ -83,12 +95,12 @@ let renderTimeout;
 document.addEventListener('RENDER', function () {
     clearTimeout(renderTimeout);
     renderTimeout = setTimeout(() => {
-        renderModules(paginate(sorting(modulesList(`${searchParts.tags.join(' ')} ${searchParts.query}`)), pagination.perPage, pagination.page));
+        renderModules(paginate(sorting(modulesList(searchParts.query, searchParts.tags)), pagination.perPage, pagination.page));
     }, 200);
 })
 
 document.querySelector('input[name="query"]').onkeyup = (e) => {
-    searchParts.query = '+' + e.target.value.replaceAll(' ', '\\ ') + '*';
+    searchParts.query = e.target.value;
     query = e.target.value;
     const url = new URL(window.location);
     url.searchParams.set('query', e.target.value);
@@ -101,8 +113,8 @@ document.querySelector('input[name="query"]').onkeyup = (e) => {
 document.addEventListener("modules_loaded", () => {
     if (getSearchParam('query')) {
         document.querySelector('input[name="query"]').value = getSearchParam('query');
-        searchParts.query = '+' + getSearchParam('query') + '*';
-        query = getSearchParam('query');
+        searchParts.query = getSearchParam('query').trim();
+        query = getSearchParam('query').trim();
         document.dispatchEvent(new Event('RENDER'));
         document.dispatchEvent(new Event('QUERY_CHANGED'));
     }
@@ -153,12 +165,23 @@ const removeAllTags = function () {
 const getTags = () => (new URLSearchParams(location.search)).getAll('tag');
 
 
-const modulesList = function (query) {
-    modules = lunrIndex.search(query).map((result) =>
-        pagesIndex.filter(function (page) {
-            return page.href === result.ref;
-        })[0]
-    );
+const modulesList = function (query, tags = []) {
+    let ids = [];
+    modules = [];
+    if (query.length > 0) {
+        flexSearchIndex.search(query).forEach(item => ids.push(...item.result));
+        [...new Set(ids)].map(key => {
+           modules.push(pagesIndex[key])
+        });
+    } else {
+        modules = Object.keys(pagesIndex).map(key => pagesIndex[key]);
+    }
+
+    if (tags.length > 0) {
+        // if we merge module tags and tags from the filter and unique array length will be the same as module tags length,
+        // then all filtered tags intersect with module tags
+        modules = modules.filter(item =>  [...new Set([...item.tags, ...tags])].length == (item.tags.length ))
+    }
     return modules;
 }
 
