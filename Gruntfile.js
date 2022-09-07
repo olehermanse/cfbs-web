@@ -144,7 +144,7 @@ module.exports = function (grunt) {
                 // frontmatters
                 let frontmatter = {
                     "title": index,
-                    "date": repoInfo.updated_at,
+                    "date": new Date(version.timestamp).toLocaleString(),
                     "id": index,
                     "description": module.description || '',
                     "author": {
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
                         "url": module.by
                     },
                     "versions": {},
-                    "updated": getFormattedDate(new Date(repoInfo.updated_at)),
+                    "updated": getFormattedDate(new Date(version.timestamp)),
                     "downloads": downloadStat[index] ?? 0,
                     "repo": module.repo,
                     "documentation": module.documentation || null,
