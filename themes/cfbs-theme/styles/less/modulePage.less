@@ -40,7 +40,7 @@
  .breadcrumbs {
   margin-bottom: 6rem;
  }
- h1, .bi-link-45deg {
+ h1, .copy-to-clipboard {
   color: @textColorDarkBlue;
   font-size: 3.2rem;
   line-height: 3.6rem;
@@ -270,24 +270,36 @@
    text-decoration: none;
   }
  }
- .link-copied {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: .8rem;
-  border-radius: .4rem;
-  color: @blue-600;
-  font-weight: 500;
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  background: @gray-100;
-  transform: translate(40%, -100%);
-  width: max-content;
- }
  .copy-link, .copy {
   cursor: pointer;
   &:hover {
    color: @blue-600;
+  }
+ }
+
+ .copy-to-clipboard {
+  position: relative;
+  &:hover {
+   &:after {
+    color: #010101;
+    font-style: normal;
+    content: "Copy to clipboard";
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: max-content;
+    background: #efefef;
+    border: 1px solid #d1d1d1;
+    border-radius: 0.4rem;
+    padding: 0 0.8rem;
+    font-size: 11px;
+    line-height: 16px;
+    z-index: 10;
+   }
+   &.bi-check2:after {
+    content: "Copied!";
+   }
   }
  }
 }

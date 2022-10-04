@@ -31,10 +31,7 @@
                     <div class="relative flex">
                         <h1>{{ .Title }}</h1>
                         <div class="relative">
-                        <i class="bi bi-link-45deg copy-link"></i>
-                        <div style="display: none" class="link-copied">
-                            Link Copied!
-                        </div>
+                        <i class="bi bi-link-45deg copy-link copy-to-clipboard"></i>
                     </div>
                     </div>
                     <div class="module-page_subtitle">{{ .Params.Description }}</div>
@@ -104,7 +101,7 @@
                     <pre>
                     <div class="command">cfbs add {{ .Params.Id }}</div>
                 </pre>
-                    <i class="bi bi-clipboard copy" data-closest="div" data-copyfrom=".command"></i>
+                    <i class="bi bi-clipboard copy copy-to-clipboard" data-closest="div" data-copyfrom=".command"></i>
                 </div>
             </div>
             <div>
