@@ -98,14 +98,15 @@ const allTags = el => {
 }
 
 let tm;
-const cl = document.querySelector('.copy-link');
+const cl = document.querySelector('.copy-link.bi-link-45deg');
 if (cl) {
     cl.addEventListener('click', function () {
+        const target = event.target;
         navigator.clipboard.writeText(window.location.href);
-        const linkCopied = document.querySelector('.link-copied');
-        linkCopied.style.display = 'block';
-        clearTimeout(tm);
-        tm = setTimeout(() => linkCopied.style.display = 'none', 2000);
+        target.classList.remove('bi-link-45deg');
+        target.className += ' bi-check2 blue-600 ';
+        clearTimeout(tm2);
+        tm = setTimeout(() => target.classList = 'bi bi-link-45deg copy-link copy-to-clipboard' , 2000);
     })
 }
 
@@ -117,10 +118,10 @@ function copy(event) {
     target.classList.remove('bi-clipboard');
     target.className += ' bi-check2 blue-600 ';
     clearTimeout(tm2);
-    tm2 = setTimeout(() => target.className = 'bi bi-clipboard' , 2000);
+    tm2 = setTimeout(() => target.className = 'bi bi-clipboard copy copy-to-clipboard' , 2000);
 }
 
-document.querySelectorAll(".copy").forEach(el => el.addEventListener("click", copy));
+document.querySelectorAll(".copy.bi-clipboard").forEach(el => el.addEventListener("click", copy));
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
