@@ -12,7 +12,7 @@ disqusShortname = 'cfengine-build'
 homeTitle = "CFEngine Build" # Title for home page
 
 [params.featured]
-modules = ['cve-2021-44228-log4j', 'compliance-report-os-is-vendor-supported', 'promise-type-http']
+modules = ['inventory-openssl-versions', 'uninstall-ftp', 'promise-type-http']
 
 [taxonomies]
 tag = "tags"
