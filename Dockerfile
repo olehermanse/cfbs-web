@@ -15,6 +15,7 @@ RUN find public -type f -regex '^.*\.\(svg\|css\|html\|xml\)$' -size +1k -exec g
 FROM nginx:stable-alpine
 RUN apk add --no-cache nodejs npm
 RUN npm i -g forever
+COPY --from=build /website/redirects.txt /etc/nginx/conf.d/
 COPY --from=build /cfbs-web/public /usr/share/nginx/html
 COPY --from=build /cfbs-web/proxy /usr/share/proxy
 COPY ./entrypoint.sh /entrypoint.sh

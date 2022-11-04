@@ -1,0 +1,1 @@
+rewrite ^/modules/all-packages-upgraded/?$ /modules/upgrade-all-packages/ permanent;
