@@ -11,7 +11,8 @@ Use at your own risk!
 1. Create your own branch / fork based on master branch.
 2. Make changes locally and preview with docker / hugo.
 3. Submit a PR to `cfengine:master` - once reviewed and merged see results here: https://staging.build.cfengine.com/
-4. Create a new PR from `cfengine:master` to `cfengine:production` - merge to deploy (after seeing it working on staging site).
+4. Create a new PR from `cfengine:master` to `cfengine:production` here: https://github.com/cfengine/build-website/compare/production...master
+5. Merge to deploy (after seeing it working on staging site).
 
 
 ## Dependencies
