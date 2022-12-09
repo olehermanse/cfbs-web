@@ -60,5 +60,3 @@ docker run -p 80:80 -p 81:81 --volume /path/to/volume:/home/proxy --name cfbs-we
 * [cfbs](https://github.com/cfengine/cfbs) - Command line client
 * [modules](https://github.com/cfengine/modules) - Official modules provided by the CFEngine team
 * [module-template](https://github.com/cfengine/build-example) - Template for creating new modules
-
-<!-- Dummy change -->
