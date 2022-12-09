@@ -3,3 +3,4 @@ rewrite ^/modules/openldap-server-not-installed/?$ /modules/uninstall-openldap-s
 rewrite ^/modules/prelinking-disabled/?$ /modules/disable-prelinking/ permanent;
 rewrite ^/modules/telnet-server-not-installed/?$ /modules/uninstall-telnet-server/ permanent;
 rewrite ^/modules/inventory-local-users-unhashed-password/?$ /modules/inventory-unshadowed-users/ permanent;
+rewrite ^/modules/ftp-server-not-installed/?$ /modules/uninstall-ftp/ permanent;
