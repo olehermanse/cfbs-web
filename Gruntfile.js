@@ -180,6 +180,13 @@ module.exports = function (grunt) {
                 // frontmatters end
                 grunt.file.write(`./content/modules/${index}/_index${extension}`, `${JSON.stringify(frontmatter, null, 2)}\n${content}`);
 
+                // write module page for the latest version
+                frontmatter.id += `@${module.version}`;
+                grunt.file.write(
+                    `./content/modules/${index}/${module.version}${extension}`,
+                    `${JSON.stringify(frontmatter, null, 2)}\n${content}`
+                );
+
                 grunt.log.ok(`${index} page created`);
             }
         }
