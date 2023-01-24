@@ -182,6 +182,7 @@ module.exports = function (grunt) {
 
                 // write module page for the latest version
                 frontmatter.id += `@${module.version}`;
+                frontmatter.hide = true;
                 grunt.file.write(
                     `./content/modules/${index}/${module.version}${extension}`,
                     `${JSON.stringify(frontmatter, null, 2)}\n${content}`
