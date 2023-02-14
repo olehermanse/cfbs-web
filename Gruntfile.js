@@ -1,4 +1,5 @@
-const got = require("got");
+import got from "got";
+
 const {extname} = require("path");
 const {createHash} = require("crypto");
 const jsdom = require("jsdom");
