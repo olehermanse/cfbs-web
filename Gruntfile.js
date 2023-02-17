@@ -85,7 +85,7 @@ module.exports = function (grunt) {
         grunt.log.ok("Index built");
     });
 
-    const got = require('got-cjs')
+    const {got} = require('got-cjs')
     const {extname} = require('path')
     const {createHash} = require('crypto')
     grunt.registerTask("modules-update", async function () {
