@@ -1,6 +1,3 @@
-const got = require("got");
-const {extname} = require("path");
-const {createHash} = require("crypto");
 const jsdom = require("jsdom");
 const CONTENT_PATH_PREFIX = "./content/modules";
 const PAGES_INDEX_PATH = "./static/js/lunr/PagesIndex.json";
@@ -88,7 +85,7 @@ module.exports = function (grunt) {
         grunt.log.ok("Index built");
     });
 
-    const got = require('got')
+    const {got} = require('got-cjs')
     const {extname} = require('path')
     const {createHash} = require('crypto')
     grunt.registerTask("modules-update", async function () {
