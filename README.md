@@ -26,9 +26,9 @@ Use at your own risk!
 
 ```
 export GITHUB_USERNAME_TOKEN='place githubName:token here'
-npm install
-npm install -g grunt-cli
-grunt build
+npm ci
+npm run build
+npm run create-modules-json
 hugo
 ```
 
