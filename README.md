@@ -1,10 +1,6 @@
-# CFEngine Build Website Repository
+# CFEngine Build website
 
 The website lists available modules from the index and gives you easy commands to copy.
-
-The CFEngine Build System (cfbs) comes with **no warranty** and is **not supported**.
-This is a work in progress, everything will change.
-Use at your own risk!
 
 ## Deployment workflow
 
@@ -26,9 +22,9 @@ Use at your own risk!
 
 ```
 export GITHUB_USERNAME_TOKEN='place githubName:token here'
-npm install
-npm install -g grunt-cli
-grunt build
+npm ci
+npm run build
+npm run create-modules-json
 hugo
 ```
 
@@ -53,7 +49,7 @@ docker build --build-arg GITHUB_USERNAME_TOKEN --tag cfbs-website -f Dockerfile 
 docker run -p 80:80 -p 81:81 --volume /path/to/volume:/home/proxy --name cfbs-website --rm cfbs-website
 ```
 
-## CFEngine Build Repositories
+## CFEngine Build repositories
 
 * [build-index](https://github.com/cfengine/build-index) - Index of modules
 * [build-website](https://github.com/cfengine/build-website) - Website

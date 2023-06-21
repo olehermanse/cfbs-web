@@ -12,7 +12,7 @@ disqusShortname = 'cfengine-build'
 homeTitle = "CFEngine Build" # Title for home page
 
 [params.featured]
-modules = ['inventory-openssl-versions', 'uninstall-ftp', 'promise-type-http']
+modules = ['packages-allowlist-snapshot', 'delete-files', 'promise-type-docker-compose']
 
 [taxonomies]
 tag = "tags"
