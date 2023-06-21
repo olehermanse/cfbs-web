@@ -224,7 +224,7 @@ function renderModules(results) {
         </div>
       </div>
       <div class="right-info">
-         <div>${result.version ? 'Version:' + result.version : ''}</div>
+         <div>${result.version ? 'Version: ' + result.version : ''}</div>
          <div>Updated: ${result.updated}</div>
          <div>Total downloads: ${result.downloads}</div>
       </div>
