@@ -28,12 +28,8 @@ document.querySelectorAll('.dropdown-select span').forEach(item => item.onclick 
 const versionsDropdown = document.querySelector('.dropdown-select.versions');
 if (versionsDropdown) {
     versionsDropdown.querySelectorAll('.dropdown-select_options > div').forEach(item => item.addEventListener('click', e => {
-        const {latest, version, module} = e.target.dataset
-        let url = `/modules/${module}/`
-        if (latest !== 'true') {
-            url +=  `${version}/`;
-        }
-        window.location.href = url;
+        const {version, module} = e.target.dataset
+        window.location.href = `/modules/${module}/${version}/`;
     }))
 }
 
