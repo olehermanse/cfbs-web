@@ -1,4 +1,4 @@
-baseurl = "https://build.cfengine.com/"
+baseurl = "/"
 languageCode = "en"
 title = "CFEngine Build"
 theme = "cfbs-theme"
@@ -17,3 +17,6 @@ modules = ['packages-allowlist-snapshot', 'delete-files', 'promise-type-docker-c
 [taxonomies]
 tag = "tags"
 author = "author"
+
+[params.sitemap]
+baseUrl = "https://build.cfengine.com"
