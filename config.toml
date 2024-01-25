@@ -1,4 +1,4 @@
-baseurl = "https://build.cfengine.com/"
+baseurl = "/"
 languageCode = "en"
 title = "CFEngine Build"
 theme = "cfbs-theme"
