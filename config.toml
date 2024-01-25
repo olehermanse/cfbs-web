@@ -17,3 +17,6 @@ modules = ['packages-allowlist-snapshot', 'delete-files', 'promise-type-docker-c
 [taxonomies]
 tag = "tags"
 author = "author"
+
+[params.sitemap]
+baseUrl = "https://build.cfengine.com"
