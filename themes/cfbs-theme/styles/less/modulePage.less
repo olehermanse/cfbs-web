@@ -247,22 +247,15 @@
    margin-top: 1.6rem;
    margin-bottom: 1.6rem;
   }
-  p, ul {
-   margin: 1.6rem 0
+  p {
+   margin: 1.6rem 0;
   }
   ul {
    list-style: none;
+   margin: 0.6rem 0;
    li {
-    margin-left: 1rem;
-    &::before {
-     content: "\2022";
-     color: @blue-800-light;
-     font-weight: bold;
-     display: inline-block;
-     width: 1rem;
-     margin-left: -1rem;
-     position: absolute;
-    }
+    margin-left: 2rem;
+    list-style-image: url(/images/orange-list-icon.svg);
    }
   }
   a {
