@@ -24,7 +24,7 @@
       "url": "#",
       "children": [
         {
-          "name": "Developer Resources",
+          "name": "Developer resources",
           "url": "https://cfengine.com/developers/",
           "target": "_blank"
         },
@@ -69,7 +69,7 @@
     {
       "Resources": [
         {
-          "name": "Developer Resources",
+          "name": "Developer resources",
           "url": "https://cfengine.com/developers/",
           "target": "_blank"
         },
@@ -93,7 +93,7 @@
     {
       "Company": [
         {
-          "name": "About Us",
+          "name": "About us",
           "url": "https://northern.tech/about-us/mission-strategy",
           "target": "_blank"
         },
@@ -103,7 +103,7 @@
           "target": "_blank"
         },
         {
-          "name": "Contact Us",
+          "name": "Contact us",
           "url": "https://cfengine.com/contact/",
           "target": "_blank"
         }
