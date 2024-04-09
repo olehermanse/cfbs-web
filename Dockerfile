@@ -10,6 +10,8 @@ COPY . ./
 RUN npm run build
 RUN ./hugo -v
 RUN npm run create-modules-json
+RUN rm ./public/package.json
+RUN rm ./public/package-lock.json
 RUN find public -type f -regex '^.*\.\(svg\|css\|html\|xml\)$' -size +1k -exec gzip -k '{}' \;
 
 FROM nginx:stable-alpine
