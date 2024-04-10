@@ -45,8 +45,7 @@ Using docker / podman to build and serve is fairly straight forward:
 
 ```
 export GITHUB_USERNAME_TOKEN='place githubName:token here'
-docker build --build-arg GITHUB_USERNAME_TOKEN --tag cfbs-website -f Dockerfile .
-docker run -p 80:80 -p 81:81 --volume /path/to/volume:/home/proxy --name cfbs-website --rm cfbs-website
+docker build --build-arg GITHUB_USERNAME_TOKEN --tag cfengine-build-website -f Dockerfile . && docker run -it -p 80:80 -p 81:81 --volume ./proxy:/home/proxy --name cfengine-build-website --rm cfengine-build-website
 ```
 
 ## CFEngine Build repositories
