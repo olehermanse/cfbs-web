@@ -1,5 +1,5 @@
 document.querySelectorAll('[data-modal]').forEach(item => {
-    item.onclick = () => {
+    item.addEventListener('click', () => {
         const modal = document.getElementById(item.dataset.modal);
         modal.style.display = 'block';
         modal.querySelector('.btn-primary').focus();
@@ -8,22 +8,23 @@ document.querySelectorAll('[data-modal]').forEach(item => {
             dc.classList.add('close');
             setTimeout(() => dc.classList.remove('close'), 100);
         }
+    })
+})
+
+window.addEventListener('click', (e)=>{
+    const {target} = e;
+    if (target.classList.contains('modal')) {
+        target.style.display = "none";
+    }
+
+    if (!target.closest('.dropdown-select') || target.parentElement.classList.contains('dropdown-select_options')) {
+        document.querySelectorAll('.dropdown-select').forEach(item => item.classList.remove('opened'))
     }
 })
 
-window.onclick = e => {
-    if (e.target.classList.contains('modal')) {
-        e.target.style.display = "none";
-    }
-
-    if (!e.target.closest('.dropdown-select') || e.target.parentElement.classList.contains('dropdown-select_options')) {
-        document.querySelectorAll('.dropdown-select').forEach(item => item.classList.remove('opened'))
-    }
-}
-
-document.querySelectorAll('.dropdown-select span').forEach(item => item.onclick = () => {
+document.querySelectorAll('.dropdown-select span').forEach(item => item.addEventListener('click', () => {
     item.closest('.dropdown-select').classList.toggle('opened')
-});
+}));
 
 const versionsDropdown = document.querySelector('.dropdown-select.versions');
 if (versionsDropdown) {
@@ -39,7 +40,6 @@ document.onkeyup = e => {
     }
 }
 
-const closeModal = (el) => el.closest('.modal').style.display = 'none';
 
 const fakeLogin = (el) => {
     el.style.display = 'none';
@@ -47,32 +47,34 @@ const fakeLogin = (el) => {
 }
 
 document.querySelectorAll('.tabs div[data-tab]').forEach(item => {
-    item.onclick = function () {
+    item.addEventListener('click', () => {
         document.querySelector('div[data-tab].active').classList.remove('active');
         item.classList.add('active');
         document.querySelector('.tabs-content.opened').classList.remove('opened');
         document.getElementById(`tab${item.dataset.tab}`).classList.add('opened');
-    }
+    })
 })
 
 
 const collapse = document.querySelector('.collapse');
 
 const dropDownHandler = function (element) {
-    const openedClass = "opened";
-    document.querySelector('li.dropdown.opened').classList.remove('opened');
-    const li = element.closest('li');
-    if (li.className.indexOf(openedClass) == -1) {
-        li.className += ` ${openedClass}`;
-    } else {
-        li.className = li.className.replace(` ${openedClass}`, "");
+    document.querySelectorAll('.dropdown-item-onclick.opened').forEach((el)=> el !== element &&  el.classList.toggle('opened') );
+
+    if(window.matchMedia("(pointer: coarse)").matches) {
+        element.classList.toggle('opened');
     }
 }
+document.querySelectorAll('.dropdown-item-onclick').forEach(element=>{
+    element.addEventListener('click', (e)=>dropDownHandler(e.target));
+})
 
-const openMenuHandler = function (collapseMenu) {
+const openMenuHandler = function () {
+    const collapseMenu = document.getElementById('openMenuToggle');
     const menu = document.querySelector('.main-menu .links');
 
     const openedClass = "opened";
+    document.querySelectorAll('.dropdown-item-onclick.opened').forEach((element)=>element.classList.toggle('opened'));
     if (collapseMenu.className.indexOf(openedClass) == -1) {
         collapseMenu.className += ` ${openedClass}`;
         menu.className += ` d-b`;
@@ -81,6 +83,7 @@ const openMenuHandler = function (collapseMenu) {
         menu.className = menu.className.replace(` d-b`, "");
     }
 }
+document.getElementById('openMenuToggle').addEventListener('click', () => openMenuHandler());
 
 const allTags = el => {
     const tags = document.querySelector('.modules-right-tags_list');
@@ -92,6 +95,10 @@ const allTags = el => {
         tags.classList.add('opened');
     }
 }
+const allTagsElement = document.getElementById('all-tags');
+allTagsElement?.addEventListener('click',(e)=>{
+    allTags(e.target);
+})
 
 let tm;
 const cl = document.querySelector('.copy-link.bi-link-45deg');
@@ -126,3 +133,15 @@ String.prototype.capitalize = function() {
 // remove all chars except alphanumeric, spaces and . , _ -
 const sanitizeString = str => str !== null ? str.replace(/[^a-z0-9\.\s,_-]/gim,"") : null;
 
+const publishModalElement = document.querySelector('[data-modal="publishModal"]');
+publishModalElement.addEventListener('click', ()=>{
+    const closeModal = (el) => el.closest('.modal').style.display = 'none';
+    document.querySelectorAll('.close-modal-click').forEach(element => {
+        element.addEventListener('click', e=> closeModal(e.target));
+    })
+    document.querySelectorAll('.opened').forEach(element=>element.classList.toggle('opened'))
+    const menu = document.querySelector('.links.d-b');
+    if (menu){
+        menu.classList.toggle('d-b');
+    }
+})

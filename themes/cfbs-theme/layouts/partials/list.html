@@ -26,7 +26,7 @@
                 <h3>Applied tags</h3>
                 <ul>
                 </ul>
-                <span><a href="javascript:;" class="removeAllTags" onclick="removeAllTags()"><i class="bi bi-x-circle-fill"></i> Clear all</a></span>
+                <span><a href="javascript:;" id="removeAllTags" class="removeAllTags"><i class="bi bi-x-circle-fill"></i> Clear all</a></span>
             </div>
         </div>
         <div class="container modules-container">
@@ -56,12 +56,12 @@
                 <div class="modules-right">
                     <h3>Tags</h3>
                     <div class="flex flex-space-between all-tags">
-                        <h3>Filter by Tag</h3> <a href="javascript:;" onclick="allTags(this)">All tags <i
+                        <h3>Filter by Tag</h3> <a id="all-tags" href="javascript:;" >All tags <i
                             class="bi bi-chevron-down"></i></a>
                     </div>
                     <div class="modules-right-tags_list">
                         <div>
-                            <div class="supported" onclick="selectTag('supported')"><a href="#">supported</a></div>
+                            <div id="supported-tag" class="supported" ><a href="#">supported</a></div>
                             <div class="help-text">Modules that are supported and tested by CFEngine.</div>
                         </div>
                         <ul class="tags">

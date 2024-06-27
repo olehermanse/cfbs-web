@@ -13,7 +13,7 @@
         <ul class="flex unstyled links">
             {{ range .Site.Data.Menus.main }}
             <li  {{ with .children }}class="flex dropdown"{{ end }}>
-                <a {{ with .children }}class="flex-grow" onclick="dropDownHandler(this)" {{ end }} {{ with .target }} target="{{ . }}" {{ end }}  href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
+                <a {{ with .children }}class="flex-grow dropdown-item-onclick" {{ end }} {{ with .target }} target="{{ . }}" {{ end }}  href="{{.url}}">{{.svg_icon | safeHTML }} {{.name}}</a>
                 {{ if isset . "children" }}
                 <i class="bi bi-chevron-down"></i>
                 <div class="dropdown-content">
@@ -40,35 +40,35 @@
                 {{ end }}
             </li>
             {{ end }}
-            <li class="flex dropdown" style="display: none">
-                <button class="btn btn-lg btn-secondary" onclick="fakeLogin(this)">
-                    Log in with Github
-                </button>
-                <div class="logged" style="display: none">
-                    <a style="height:4rem;display:inline-block;"><img height="38" src="https://avatars.githubusercontent.com/u/82047138?v=4" style="border-radius: 10rem;"
-                            width="38"/></a>
-                    <i class="bi bi-chevron-down"></i>
-                    <div class="dropdown-content">
-                        <div class="user"><i class="bi bi-person-fill"></i> Chiachenglu</div>
-                        <ul class="unstyled">
-                            <li class="relative">
-                                <a href="#">Followed modules</a>
-                            </li>
-                            <li class="relative">
-                                <a data-modal="publishModal" href="#">Publish a module</a>
-                            </li>
-                            <li class="relative">
-                                <a href="/">Log out</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
+<!--            <li class="flex dropdown" style="display: none">-->
+<!--                <button class="btn btn-lg btn-secondary" onclick="fakeLogin(this)">-->
+<!--                    Log in with Github-->
+<!--                </button>-->
+<!--                <div class="logged" style="display: none">-->
+<!--                    <a style="height:4rem;display:inline-block;"><img height="38" src="https://avatars.githubusercontent.com/u/82047138?v=4" style="border-radius: 10rem;"-->
+<!--                            width="38"/></a>-->
+<!--                    <i class="bi bi-chevron-down"></i>-->
+<!--                    <div class="dropdown-content">-->
+<!--                        <div class="user"><i class="bi bi-person-fill"></i> Chiachenglu</div>-->
+<!--                        <ul class="unstyled">-->
+<!--                            <li class="relative">-->
+<!--                                <a href="#">Followed modules</a>-->
+<!--                            </li>-->
+<!--                            <li class="relative">-->
+<!--                                <a data-modal="publishModal" href="#">Publish a module</a>-->
+<!--                            </li>-->
+<!--                            <li class="relative">-->
+<!--                                <a href="/">Log out</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </li>-->
         </ul>
 
-        <div onclick="openMenuHandler(this)" class="collapse center-align relative">
-            <i style="font-size: 3.5rem" class="vertical-middle centered collapse-open bi bi-list"></i>
-            <i style="font-size: 3.5rem" class="vertical-middle centered collapse-close bi bi-x"></i>
+        <div id="openMenuToggle"  class="collapse center-align relative">
+            <i class="vertical-middle centered collapse-open bi bi-list font-size-35"></i>
+            <i class="vertical-middle centered collapse-close bi bi-x font-size-35"></i>
         </div>
     </nav>
 </div>

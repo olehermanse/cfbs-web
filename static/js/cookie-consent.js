@@ -31,10 +31,10 @@ const cookieConsent = (function () {
                     View our <a target="_blank" href="https://northern.tech/legal/cookies">cookie policy</a>
                 </div>
                 <div class="cookie-consent-buttons">
-                    <a class="btn btn-default" onclick="cookieConsent.deny()" href="javascript:void(0)">
+                    <a class="btn btn-default" id="cookie-decline" href="javascript:void(0)">
                         Decline
                     </a>
-                    <a class="btn btn-primary" onclick="cookieConsent.allow()" href="javascript:void(0)">
+                    <a class="btn btn-primary" id="cookie-allow" href="javascript:void(0)">
                         Allow
                     </a>
                 </div>
@@ -49,6 +49,8 @@ const cookieConsent = (function () {
         const wrapper = document.createElement("div");
         wrapper.innerHTML = modalHTML;
         document.body.appendChild(wrapper)
+        document.getElementById('cookie-decline').addEventListener('click', cookieConsent.deny);
+        document.getElementById('cookie-allow').addEventListener('click', cookieConsent.allow);
     }
 
 
