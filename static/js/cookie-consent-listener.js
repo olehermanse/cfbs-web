@@ -1,6 +1,5 @@
 let gaInitialized = false;
 document.addEventListener('cookieconsent_allowed', () => {
-    console.log('allowed');
     if (gaInitialized === true) return;
     const script = document.createElement('script');
     script.src = 'https://www.googletagmanager.com/gtag/js?id=G-TW89K2P8L4';
