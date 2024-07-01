@@ -94,17 +94,20 @@ const orderChanged = (e) => {
 
 document.querySelectorAll('.sort-by .dropdown-select_options div').forEach(item => item.addEventListener('click', orderChanged))
 
-const createTagElement = (tag, remove = false)=>{
+const createTagElement = (tag, remove = false) => {
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.textContent = tag;
-    a.addEventListener('click',()=>remove ? removeTag(tag) : selectTag(tag));
-    li.appendChild(a);
-    if (remove){
+    a.href="#";
+    a.addEventListener('click', () => remove ? removeTag(tag) : selectTag(tag));
+    if (remove) {
+        li.prepend(tag);
         const i = document.createElement('i');
         i.className = 'bi bi-x';
-        li.appendChild(i);
+        a.appendChild(i);
+    } else {
+        a.textContent = tag;
     }
+    li.appendChild(a);
     return li;
 }
 
