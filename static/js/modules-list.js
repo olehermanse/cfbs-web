@@ -120,7 +120,7 @@ document.addEventListener('TAGS_LOADED', function (e) {
         appliedTagsElement.style.display = 'block';
         searchParts.tags.push(...selectedTags);
         document.dispatchEvent(new Event('RENDER'))
-        document.querySelector('.modules-applied-tags ul').append(...selectedTags.map(item => createTagElement(sanitizeString(item, true))));
+        document.querySelector('.modules-applied-tags ul').append(...selectedTags.map(item => createTagElement(sanitizeString(item), true)));
     } else if (appliedTagsElement) {
         appliedTagsElement.style.display = 'none';
     }
