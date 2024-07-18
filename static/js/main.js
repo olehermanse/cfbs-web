@@ -1,7 +1,8 @@
 document.querySelectorAll('[data-modal]').forEach(item => {
     item.addEventListener('click', () => {
         const modal = document.getElementById(item.dataset.modal);
-        modal.style.display = 'block';
+        modal.classList.remove('display-none');
+        modal.classList.add('display-block');
         modal.querySelector('.btn-primary').focus();
         const dc = item.closest('.dropdown-content');
         if (dc) { // if element is part of dropdown then close dropdown
@@ -14,7 +15,8 @@ document.querySelectorAll('[data-modal]').forEach(item => {
 window.addEventListener('click', (e)=>{
     const {target} = e;
     if (target.classList.contains('modal')) {
-        target.style.display = "none";
+        target.classList.remove('display-block');
+        target.classList.add('display-none');
     }
 
     if (!target.closest('.dropdown-select') || target.parentElement.classList.contains('dropdown-select_options')) {
@@ -36,15 +38,15 @@ if (versionsDropdown) {
 
 document.onkeyup = e => {
     if (e.key == 'Escape') {
-        document.querySelectorAll('.modal').forEach(item => item.style.display = 'none')
+        document.querySelectorAll('.modal').forEach(item => item.classList.add('display-none'))
     }
 }
 
 
-const fakeLogin = (el) => {
-    el.style.display = 'none';
-    el.closest('li').querySelector('.logged').style.display = 'block';
-}
+// const fakeLogin = (el) => {
+//     el.style.display = 'none';
+//     el.closest('li').querySelector('.logged').style.display = 'block';
+// }
 
 document.querySelectorAll('.tabs div[data-tab]').forEach(item => {
     item.addEventListener('click', () => {
@@ -135,7 +137,7 @@ const sanitizeString = str => str !== null ? str.replace(/[^a-z0-9\.\s,_-]/gim,"
 
 const publishModalElement = document.querySelector('[data-modal="publishModal"]');
 publishModalElement.addEventListener('click', ()=>{
-    const closeModal = (el) => el.closest('.modal').style.display = 'none';
+    const closeModal = (el) => el.closest('.modal').classList.add('display-none');
     document.querySelectorAll('.close-modal-click').forEach(element => {
         element.addEventListener('click', e=> closeModal(e.target));
     })

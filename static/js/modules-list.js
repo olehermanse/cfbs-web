@@ -36,11 +36,13 @@ const resultsWrapper = document.querySelector('div.modules-list');
 const searchfor = document.getElementById('searchfor');
 document.addEventListener('QUERY_CHANGED', () => {
     if (query & query.length > 0) {
-        searchfor.style.display = 'block';
+        searchfor.classList.remove('display-none');
+        searchfor.classList.add('display-block');
         searchfor.querySelector('b').innerText = query;
         changeDefaultSorting(sortOptions.relevance);
     } else {
-        searchfor.style.display = 'none';
+        searchfor.classList.remove('display-block');
+        searchfor.classList.add('display-none');
     }
 })
 
@@ -117,12 +119,14 @@ document.addEventListener('TAGS_LOADED', function (e) {
     document.querySelector('ul.tags').append(...tagElements);
     const appliedTagsElement = document.querySelector('.modules-applied-tags')
     if (appliedTagsElement && selectedTags.length) {
-        appliedTagsElement.style.display = 'block';
+        appliedTagsElement.classList.remove('display-none');
+        appliedTagsElement.classList.add('display-block');
         searchParts.tags.push(...selectedTags);
         document.dispatchEvent(new Event('RENDER'))
         document.querySelector('.modules-applied-tags ul').append(...selectedTags.map(item => createTagElement(sanitizeString(item), true)));
     } else if (appliedTagsElement) {
-        appliedTagsElement.style.display = 'none';
+        appliedTagsElement.classList.remove('display-block');
+        appliedTagsElement.classList.add('display-none');
     }
 })
 
