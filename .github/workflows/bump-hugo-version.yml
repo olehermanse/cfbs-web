@@ -26,7 +26,7 @@ jobs:
           sed -i "s|https://github.com/gohugoio/hugo/releases/download/v.*_Linux-64bit.tar.gz|https://github.com/gohugoio/hugo/releases/download/v${{ steps.fetch_hugo_version.outputs.version }}/hugo_${{ steps.fetch_hugo_version.outputs.version }}_Linux-64bit.tar.gz|" Dockerfile
           sed -i "s/.*sha256sum.*/RUN echo \"${{ steps.fetch_hugo_version.outputs.checksum }}  hugo.tar.gz\" | sha256sum -c/" Dockerfile
       - name: Create Pull Request
-        uses: cfengine/create-pull-request@v6
+        uses: cfengine/create-pull-request@v7
         with:
           commit-message: Upgraded Hugo version to ${{ steps.fetch_hugo_version.outputs.version }}
           title: Upgraded Hugo version to ${{ steps.fetch_hugo_version.outputs.version }}
