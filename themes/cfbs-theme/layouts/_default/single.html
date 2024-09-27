@@ -108,7 +108,7 @@
                 <div class="tabs">
                     <div class="active" data-tab="1">Description</div>
                     <div data-tab="2">Dependencies</div>
-                    <div data-tab="3">Comments</div>
+                    <div data-tab="3">Discussion</div>
                 </div>
                 <div class="tabs-content-wrapper">
                     <div class="tabs-content opened" id="tab1">{{ .Content }}</div>
@@ -126,7 +126,10 @@
                         <p>This module has no dependencies</p>
                         {{ end }}
                     </div>
-                    <div class="tabs-content" id="tab3">{{ template "_internal/disqus.html" . }}</div>
+                    <div class="tabs-content" id="tab3">
+                        <a href="{{ .Params.DiscussionSearch }}" target="_blank">Find related thread in GitHub discussions</a> or
+                        <a href="{{ .Params.Discussion }}" target="_blank">Start a new discussion</a>
+                    </div>
                 </div>
         </div>
     </div>

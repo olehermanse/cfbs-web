@@ -6,7 +6,6 @@ theme = "cfbs-theme"
 # Number of posts per page
 Paginate = 10
 enableRobotsTXT = true
-disqusShortname = 'cfengine-build'
 syntaxCSS = true
 
 [params.info]
