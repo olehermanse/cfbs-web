@@ -94,7 +94,7 @@ const modulesUpdate = async () => {
       // frontmatters
       let frontmatter = {
         title: index,
-        date: new Date(version.timestamp).toLocaleString(),
+        date: new Date(version.timestamp),
         id: index,
         description: module.description || '',
         author: {
