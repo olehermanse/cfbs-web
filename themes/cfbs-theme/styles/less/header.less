@@ -125,14 +125,15 @@ header {
   svg {
     vertical-align: middle;
   }
-
-  > ul > li > a {
-    &:hover {
-      color: @orange;
-    }
-    @media @tablet-down {
-      &:focus {
+  @media (hover: hover){
+    > ul > li > a {
+      &:hover {
         color: @orange;
+      }
+      @media @tablet-down {
+        &:focus {
+          color: @orange;
+        }
       }
     }
   }
@@ -251,8 +252,7 @@ header {
         font-weight: bold;
         font-size: 1.6rem;
         line-height: 2rem;
-        padding-left: 2.5rem;
-        margin: 1.6rem 0;
+        padding: 1.6rem 0 1.6rem 2.5rem;
       }
     }
 
@@ -279,6 +279,8 @@ header {
             font-size: 14px;
             line-height: 16px;
             color: @MainMenuTextColor;
+            padding: 0 0 0 2.5rem;
+            margin: 1.6rem 0;
           }
         }
       }
@@ -460,38 +462,48 @@ header {
     margin-left: 1rem;
     vertical-align: sub;
   }
-
-  &:hover &-content {
-    height: auto;
-    min-width: 16rem;
-    width: max-content;
-    overflow: visible;
-  }
-
-  @media screen and @tablet-down {
-    &:focus &-content, &:focus-within &-content{
+  @media (hover: hover) {
+    &:hover &-content {
       height: auto;
       min-width: 16rem;
       width: max-content;
       overflow: visible;
     }
   }
-
-  &:hover {
-    > a {
-      color: @orange;
-    }
-
+  &-item-onclick.opened{
+    color: @orange;
     i.bi-chevron-down {
       transform: rotate(180deg);
       color: @orange;
     }
+  }
+  &-item-onclick.opened ~ i.bi-chevron-down{
+    transform: rotate(180deg);
+    color: @orange;
+  }
+  &-item-onclick.opened ~ &-content {
+    height: auto;
+    min-width: 16rem;
+    width: max-content;
+    overflow: visible;
+  }
+  @media (hover: hover) {
+    &:hover {
+      > a {
+        color: @orange;
+      }
 
-    div.close {
-      height: 0;
-      width: 0;
-      min-width: 0;
-      overflow: hidden;
+      i.bi-chevron-down {
+        transform: rotate(180deg);
+        color: @orange;
+      }
+
+      div.close {
+        height: 0;
+        width: 0;
+        min-width: 0;
+        overflow: hidden;
+      }
     }
   }
 }

@@ -90,11 +90,18 @@ const modulesUpdate = async () => {
       } else {
         content = 'Readme not found';
       }
-
+      const discussionParams = new URLSearchParams({
+        category: 'modules',
+        title: index,
+        body: 'I have a question regarding...'
+      })
+      const discussionSearch = new URLSearchParams({
+        discussions_q: `is:open category:Modules ${index}`
+      })
       // frontmatters
       let frontmatter = {
         title: index,
-        date: new Date(version.timestamp).toLocaleString(),
+        date: new Date(version.timestamp),
         id: index,
         description: module.description || '',
         author: {
@@ -112,7 +119,9 @@ const modulesUpdate = async () => {
         commit: module.commit,
         dependencies: module.dependencies || [],
         tags: module.tags || [],
-        layout: 'single'
+        layout: 'single',
+        discussion: `https://github.com/cfengine/core/discussions/new?${discussionParams.toString()}`,
+        discussionSearch: `https://github.com/cfengine/core/discussions/categories/modules?${discussionSearch.toString()}`
       };
 
       if (module.hasOwnProperty('version')) {

@@ -9,7 +9,25 @@ const sortOptions = {
 };
 
 let sort = sortOptions.alphabetic;
+const modulesList = function (query, tags = []) {
+    let ids = [];
+    modules = [];
+    if (query.length > 0) {
+        flexSearchIndex.search(query).forEach(item => ids.push(...item.result));
+        [...new Set(ids)].map(key => {
+            modules.push(pagesIndex[key])
+        });
+    } else {
+        modules = Object.keys(pagesIndex).map(key => pagesIndex[key]);
+    }
 
+    if (tags.length > 0) {
+        // if we merge module tags and tags from the filter and unique array length will be the same as module tags length,
+        // then all filtered tags intersect with module tags
+        modules = modules.filter(item =>  [...new Set([...item.tags, ...tags])].length == (item.tags.length ))
+    }
+    return modules;
+}
 
 // if sorting is selected from the dropdown then do not change it automatically
 const changeDefaultSorting = newSortOption => (getSearchParam('sort') == null) && (sort = newSortOption)
@@ -18,11 +36,13 @@ const resultsWrapper = document.querySelector('div.modules-list');
 const searchfor = document.getElementById('searchfor');
 document.addEventListener('QUERY_CHANGED', () => {
     if (query & query.length > 0) {
-        searchfor.style.display = 'block';
+        searchfor.classList.remove('display-none');
+        searchfor.classList.add('display-block');
         searchfor.querySelector('b').innerText = query;
         changeDefaultSorting(sortOptions.relevance);
     } else {
-        searchfor.style.display = 'none';
+        searchfor.classList.remove('display-block');
+        searchfor.classList.add('display-none');
     }
 })
 
@@ -76,18 +96,37 @@ const orderChanged = (e) => {
 
 document.querySelectorAll('.sort-by .dropdown-select_options div').forEach(item => item.addEventListener('click', orderChanged))
 
+const createTagElement = (tag, remove = false) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href="#";
+    a.addEventListener('click', () => remove ? removeTag(tag) : selectTag(tag));
+    if (remove) {
+        li.prepend(tag);
+        const i = document.createElement('i');
+        i.className = 'bi bi-x';
+        a.appendChild(i);
+    } else {
+        a.textContent = tag;
+    }
+    li.appendChild(a);
+    return li;
+}
+
 document.addEventListener('TAGS_LOADED', function (e) {
     const selectedTags = getTags();
-    let tagsHtml = '';
-    tags.forEach(tag => tagsHtml += tag == 'Supported' ? '' : `<li><a onclick="selectTag('${sanitizeString(tag)}')" href="#">${sanitizeString(tag)}</a></li>`);
-    document.querySelector('ul.tags').innerHTML = tagsHtml;
-    if (selectedTags.length) {
-        document.querySelector('.modules-applied-tags').style.display = 'block';
+    const tagElements = [...tags].map(tag =>  tag === 'Supported' ? null : createTagElement(sanitizeString(tag))).filter(Boolean);
+    document.querySelector('ul.tags').append(...tagElements);
+    const appliedTagsElement = document.querySelector('.modules-applied-tags')
+    if (appliedTagsElement && selectedTags.length) {
+        appliedTagsElement.classList.remove('display-none');
+        appliedTagsElement.classList.add('display-block');
         searchParts.tags.push(...selectedTags);
         document.dispatchEvent(new Event('RENDER'))
-        document.querySelector('.modules-applied-tags ul').innerHTML = selectedTags.map(item => `<li>${sanitizeString(item)} <a onclick="removeTag('${sanitizeString(item)}')" href="#"><i class="bi bi-x"></i></a></li>`).join('');
-    } else {
-        document.querySelector('.modules-applied-tags').style.display = 'none';
+        document.querySelector('.modules-applied-tags ul').append(...selectedTags.map(item => createTagElement(sanitizeString(item), true)));
+    } else if (appliedTagsElement) {
+        appliedTagsElement.classList.remove('display-block');
+        appliedTagsElement.classList.add('display-none');
     }
 })
 
@@ -145,6 +184,9 @@ const selectTag = function (tag) {
     tags.forEach(item => searchParams.append('tag', item))
     location.search = searchParams.toString();
 }
+document.getElementById('supported-tag').addEventListener('click',(e)=>{
+    selectTag('supported');
+})
 
 const removeTag = function (tag) {
     const searchParams = new URLSearchParams(location.search);
@@ -161,77 +203,115 @@ const removeAllTags = function () {
     searchParams.delete('tag')
     location.search = searchParams.toString();
 }
+document.getElementById('removeAllTags').addEventListener('click', removeAllTags)
 
 const getTags = () => (new URLSearchParams(location.search)).getAll('tag');
 
 
-const modulesList = function (query, tags = []) {
-    let ids = [];
-    modules = [];
-    if (query.length > 0) {
-        flexSearchIndex.search(query).forEach(item => ids.push(...item.result));
-        [...new Set(ids)].map(key => {
-           modules.push(pagesIndex[key])
-        });
-    } else {
-        modules = Object.keys(pagesIndex).map(key => pagesIndex[key]);
-    }
 
-    if (tags.length > 0) {
-        // if we merge module tags and tags from the filter and unique array length will be the same as module tags length,
-        // then all filtered tags intersect with module tags
-        modules = modules.filter(item =>  [...new Set([...item.tags, ...tags])].length == (item.tags.length ))
-    }
-    return modules;
-}
 
 function renderModules(results) {
     pagination.maxPage = Math.ceil(modules.length / pagination.perPage);
-    resultsWrapper.innerHTML = '';
-    document.querySelectorAll('.pagesCount').forEach(item => item.innerHTML = modules.length);
+    resultsWrapper.replaceChildren();
+    document.querySelectorAll('.pagesCount').forEach(item => item.textContent = modules.length);
     initPaginationHtml();
     if (!results.length || !resultsWrapper) {
         return;
     }
 
-    resultsWrapper.innerHTML = '';
+    resultsWrapper.replaceChildren();
     let modulesHTML = '';
-    results.forEach(function (result) {
-        modulesHTML += `
-            <article class="modules-item">
-   <div class="flex flex-space-between">
-      <div>
-         <div class="modules-item_name flex-grow">
-            <div class="flex flex--align_center">
-               <div class="modules-item_avatar">
-                  <img width="32" height="32" src="${result.author.image}">
-               </div>
-               <div>
-                  <a href="${result.href}" class="modules-item_title">${result.title}</a>
-                  <div class="modules-item_author">by ${result.author.name}</div>
-               </div>
-            </div>
-         </div>
-         <p class="modules-item_description">
-            ${result.description}
-         </p>
-         <div class="modules-item_tags tags">
-          <ul>
-              ${result.tags.map(tag => ` <li class="${tag.toLowerCase()}">
-                <a onclick="selectTag('${tag}')" href="#">${tag}</a>
-             </li>`).join('')}
-          </ul>
-        </div>
-      </div>
-      <div class="right-info">
-         <div>${result.version ? 'Version: ' + result.version : ''}</div>
-         <div>Updated: ${result.updated}</div>
-         <div>Total downloads: ${result.downloads}</div>
-      </div>
-   </div>
-</article>`
+    results.forEach(function(result) {
+        const article = document.createElement('article');
+        article.className = 'modules-item';
+
+        const flexDiv = document.createElement('div');
+        flexDiv.className = 'flex flex-space-between';
+
+        const leftDiv = document.createElement('div');
+
+        const itemNameDiv = document.createElement('div');
+        itemNameDiv.className = 'modules-item_name flex-grow';
+
+        const flexAlignDiv = document.createElement('div');
+        flexAlignDiv.className = 'flex flex--align_center';
+
+        const avatarDiv = document.createElement('div');
+        avatarDiv.className = 'modules-item_avatar';
+
+        const avatarImg = document.createElement('img');
+        avatarImg.width = 32;
+        avatarImg.height = 32;
+        avatarImg.src = result.author.image;
+        avatarDiv.appendChild(avatarImg);
+
+        const infoDiv = document.createElement('div');
+
+        const titleLink = document.createElement('a');
+        titleLink.href = result.href;
+        titleLink.className = 'modules-item_title';
+        titleLink.textContent = result.title;
+
+        const authorDiv = document.createElement('div');
+        authorDiv.className = 'modules-item_author';
+        authorDiv.textContent = `by ${result.author.name}`;
+
+        infoDiv.appendChild(titleLink);
+        infoDiv.appendChild(authorDiv);
+
+        flexAlignDiv.appendChild(avatarDiv);
+        flexAlignDiv.appendChild(infoDiv);
+        itemNameDiv.appendChild(flexAlignDiv);
+
+        const descriptionP = document.createElement('p');
+        descriptionP.className = 'modules-item_description';
+        descriptionP.textContent = result.description;
+
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'modules-item_tags tags';
+
+        const tagsUl = document.createElement('ul');
+        result.tags.forEach(tag => {
+            const tagLi = document.createElement('li');
+            tagLi.className = tag.toLowerCase();
+
+            const tagA = document.createElement('a');
+            tagA.href = '#';
+            tagA.addEventListener('click', ()=> selectTag(tag));
+            tagA.textContent = tag;
+            tagLi.appendChild(tagA);
+            tagsUl.appendChild(tagLi);
+        });
+        tagsDiv.appendChild(tagsUl);
+
+        leftDiv.appendChild(itemNameDiv);
+        leftDiv.appendChild(descriptionP);
+        leftDiv.appendChild(tagsDiv);
+
+        const rightDiv = document.createElement('div');
+        rightDiv.className = 'right-info';
+
+        if (result.version) {
+            const versionDiv = document.createElement('div');
+            versionDiv.textContent = `Version: ${result.version}`;
+            rightDiv.appendChild(versionDiv);
+        }
+
+        const updatedDiv = document.createElement('div');
+        updatedDiv.textContent = `Updated: ${result.updated}`;
+        rightDiv.appendChild(updatedDiv);
+
+        const downloadsDiv = document.createElement('div');
+        downloadsDiv.textContent = `Total downloads: ${result.downloads}`;
+        rightDiv.appendChild(downloadsDiv);
+
+        flexDiv.appendChild(leftDiv);
+        flexDiv.appendChild(rightDiv);
+
+        article.appendChild(flexDiv);
+
+        resultsWrapper.appendChild(article);
     });
-    resultsWrapper.innerHTML = modulesHTML;
 }
 
 const paginate = (items, perPage, page) => items.slice((page - 1) * perPage, page * perPage);
@@ -324,5 +404,5 @@ const initPaginationHtml = () => {
         sortBy.querySelector('span > div').innerText = sort.capitalize().replace('-', ' ');
     }
 
-    perPageDropdown.querySelector('span > div').innerHTML = pagination.perPage;
+    perPageDropdown.querySelector('span > div').textContent = pagination.perPage;
 }
