@@ -8,7 +8,7 @@ COPY package-lock.json package.json ./
 RUN npm ci
 COPY . ./
 RUN npm run build
-RUN ./hugo -v
+RUN ./hugo --logLevel info
 RUN npm run create-modules-json
 RUN rm ./public/package.json
 RUN rm ./public/package-lock.json
