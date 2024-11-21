@@ -3,10 +3,12 @@ languageCode = "en"
 title = "CFEngine Build"
 theme = "cfbs-theme"
 
-# Number of posts per page
-Paginate = 10
 enableRobotsTXT = true
 syntaxCSS = true
+
+# Number of posts per page
+[pagination]
+pagerSize = 10
 
 [params.info]
 homeTitle = "CFEngine Build" # Title for home page
